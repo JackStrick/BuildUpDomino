@@ -128,17 +128,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BuildUp.cpp" />
+    <ClCompile Include="Computer.cpp" />
+    <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="GameBoard.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="MessageOutput.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Round.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tournament.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Computer.h" />
+    <ClInclude Include="Deck.h" />
+    <ClInclude Include="GameBoard.h" />
+    <ClInclude Include="Human.h" />
     <ClInclude Include="MessageOutput.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Round.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="Tournament.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

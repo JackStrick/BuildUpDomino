@@ -6,21 +6,25 @@
 
 using namespace std;
 
-int main()
+int main( int argc, char *argv[])
 {
     // Initialize Message Output Class To User
     MessageOutput msg;
 
-    // Check if the user wants to play
-    if (!msg.Welcome()) 
+    // Display Welcome Screen and Check if the user wants to play
+    int choice = msg.Welcome();
+
+    //If the choice returned 0, the user doesn't want to play
+    if (choice == 0)
     {
+        //End Program
         return 0;
     }
 
     // Initialize Tournament Object/Class
     Tournament game;
 
-    // Begin Game
-    game.StartGame();
+    // Begin Game - The choice integer determines if new game or from file
+    game.StartGame(choice);
 }
 

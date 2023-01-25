@@ -10,21 +10,33 @@
 class Tournament
 {
 public:
+	// Constructor 
 	Tournament();
+
+	// Destructor
 	~Tournament();
 
 	//Start Game - Begins the program by initializing setup
-	void StartGame();
+	void StartGame(int a_choice);
 
 	//Continue Playing - Determines # of rounds based on user
 	bool ContinuePlaying();
 
-	void ScoreGame();
+	// Get Current Score of Game
+	void ScoreGame(unsigned short m_playerScore, unsigned short m_cpuScore);
+
+	// User Done With The Game - End
+	void EndGame(unsigned short m_numRounds, unsigned short m_playerScore, unsigned short m_cpuScore);
 
 private:
-
+	//FileReader m_file;
 	MessageOutput m_msg;
 	Round m_round;
+
+	// Variables
+	unsigned short m_playerScore;
+	unsigned short m_cpuScore;
+	unsigned short m_numRounds;
 
 
 };
