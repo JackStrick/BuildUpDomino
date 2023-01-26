@@ -10,6 +10,9 @@ public:
 
 
 	void SetGameBoard(vector<Tile> tiles);
+
+	void DisplayGameBoard();
+
 	vector<Tile> GetDominoStack();
 
 

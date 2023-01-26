@@ -15,16 +15,41 @@ int MessageOutput::Welcome()
 	
 	if (choice != 1 && choice != 2)
 	{
-		cout << "Maybe Next Time\nGoodbye!";
+		cout << "\nMaybe Next Time\nGoodbye!";
 		return 0;
 	}
 
 	return choice;
 }
 
+void MessageOutput::GameSetup()
+{
+	cout << "\n\nShuffling Player and Computer Decks.....";
+	cout << "\nBoth Players Drawing Tiles....";
+	cout << "\nCreating Initial Stacks....";
+	cout << "\n\nGameboard Setup\n";
+}
+
+void MessageOutput::FirstUp(int a_first, int a_humanTotal, int a_computerTotal)
+{
+	cout << "\nYour tile value was " << a_humanTotal;
+	cout << "\nThe Computer's tile value was " << a_computerTotal;
+	if (a_first == 1)
+	{
+		cout << "\nYour tile value was larger so you'll go first!";
+		cout << "\n\nBoth Players Drawing the rest of their hand...";
+	}
+	else if (a_first == 2)
+	{
+		cout << "\nThe computer tile value was larger so the computer will go first!";
+		cout << "\n\nBoth Players Drawing the rest of their hand...";
+	}
+}
+
+
 bool MessageOutput::Continue()
 {
-	cout << "The round has concluded\nWould you like to play a new round?\n\n";
+	cout << "\nThe round has concluded\nWould you like to play a new round?\n\n";
 
 	int choice = 0;
 	while ((choice != 1) && (choice != 2))
@@ -36,7 +61,7 @@ bool MessageOutput::Continue()
 	if (choice != 1)
 	{
 		cout << "\nTournament Complete\n";
-		cout << "Calculating Score...";
+		cout << "\nCalculating Score...";
 		return false;
 	}
 

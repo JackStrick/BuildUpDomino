@@ -37,8 +37,15 @@ void Deck::GenerateTiles()
 	ShuffleDeck(m_whiteTiles);
 }
 
+/*
+
+
+	Resources:
+	https://stackoverflow.com/questions/13459953/random-shuffle-not-really-random
+*/
 void Deck::ShuffleDeck(vector<Tile> &a_Tiles)
 {
+	srand(time(0));
 	random_shuffle(a_Tiles.begin(), a_Tiles.end());
 }
 

@@ -8,6 +8,8 @@
 #include "Computer.h"
 #include "Deck.h"
 #include "GameBoard.h"
+#include "Hand.h"
+#include "MessageOutput.h"
 
 class Round
 {
@@ -16,6 +18,7 @@ public:
 	~Round();
 
 	void StartRound();
+	int TileCompare(Tile a_human, Tile a_computer);
 
 
 private:
@@ -24,6 +27,8 @@ private:
 	Computer m_computer;
 	Deck m_deck;
 	GameBoard m_gameBoard;
+	Hand m_hand;
+	MessageOutput m_msg;
 
 
 	unsigned short m_humanType = 1;

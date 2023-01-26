@@ -47,6 +47,7 @@ void Tournament::StartGame(int a_choice)
    */
     do
     {
+        m_msg.GameSetup();
         m_round.StartRound();
         ScoreGame(m_playerScore, m_cpuScore);
     } while (ContinuePlaying());

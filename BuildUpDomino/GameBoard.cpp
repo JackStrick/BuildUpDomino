@@ -25,3 +25,18 @@ vector<Tile> GameBoard::GetDominoStack()
 {
 	return m_Stack;
 }
+
+void GameBoard::DisplayGameBoard()
+{
+	cout << "\n";
+	for (int i = 0; i < m_Stack.size(); i++)
+	{
+		if (i == 6)
+		{
+			cout << "\n";
+		}
+		cout << "{" << m_Stack.at(i).getColor();
+		cout << m_Stack.at(i).getLeftPips();
+		cout << m_Stack.at(i).getRightPips() << "} ";
+	}
+}
