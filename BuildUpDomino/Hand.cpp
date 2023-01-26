@@ -39,3 +39,12 @@ int Hand::InitialTilePipTotal()
 	return m_playerHand.at(0).getTotalPips();
 }
 
+void Hand::DisplayHand()
+{
+	for (int i = 0; i < m_playerHand.size(); i++)
+	{
+		cout << "{" << m_playerHand.at(i).getColor();
+		cout << m_playerHand.at(i).getLeftPips();
+		cout << m_playerHand.at(i).getRightPips() << "} ";
+	}
+}

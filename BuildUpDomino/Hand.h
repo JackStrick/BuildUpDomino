@@ -15,6 +15,8 @@ public:
 
 	int InitialTilePipTotal();
 
+	void DisplayHand();
+
 	void SetHand(vector<Tile> a_playerTiles);
 
 	Tile GetInitialTile();

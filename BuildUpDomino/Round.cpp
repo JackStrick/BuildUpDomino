@@ -50,6 +50,9 @@ void Round::StartRound()
 		m_human.AddToHand(m_human.Draw(5));
 		m_computer.AddToHand(m_computer.Draw(5));
 
+		cout << "\n\nYour Current Hand\n";
+		m_human.GetHand();
+
 		
 
 				

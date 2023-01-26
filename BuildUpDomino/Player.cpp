@@ -83,3 +83,8 @@ int Player::FirstTilePipTotal()
 {
 	return m_hand.InitialTilePipTotal();
 }
+
+void Player::GetHand()
+{
+	m_hand.DisplayHand();
+}
