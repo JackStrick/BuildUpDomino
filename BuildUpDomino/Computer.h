@@ -6,7 +6,7 @@ public:
 	Computer();
 	~Computer();
 
-
+	void Play();
 
 private:
 

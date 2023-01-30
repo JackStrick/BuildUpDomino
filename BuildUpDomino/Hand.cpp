@@ -34,12 +34,12 @@ void Hand::SetHand(vector<Tile> a_playerTiles)
 	}
 }
 
-int Hand::InitialTilePipTotal()
+int const Hand::InitialTilePipTotal()
 {
 	return m_playerHand.at(0).getTotalPips();
 }
 
-void Hand::DisplayHand()
+void const Hand::DisplayHand()
 {
 	for (int i = 0; i < m_playerHand.size(); i++)
 	{

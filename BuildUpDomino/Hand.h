@@ -13,9 +13,9 @@ public:
 
 	void ClearHand();
 
-	int InitialTilePipTotal();
+	int const InitialTilePipTotal();
 
-	void DisplayHand();
+	void const DisplayHand();
 
 	void SetHand(vector<Tile> a_playerTiles);
 

@@ -11,9 +11,11 @@ public:
 
 	void SetGameBoard(vector<Tile> tiles);
 
-	void DisplayGameBoard();
+	void TilePlacement(Tile a_tile, int a_pos);
 
-	vector<Tile> GetDominoStack();
+	void const DisplayGameBoard();
+
+	vector<Tile> const GetDominoStack();
 
 
 private:

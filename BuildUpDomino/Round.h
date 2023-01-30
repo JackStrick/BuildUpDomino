@@ -3,7 +3,7 @@
 //
 #pragma once
 
-
+#include "Player.h"
 #include "Human.h"
 #include "Computer.h"
 #include "Deck.h"
@@ -19,6 +19,8 @@ public:
 
 	void StartRound();
 	int TileCompare(Tile a_human, Tile a_computer);
+	void SetTurn(Player a_player);
+	void SwitchTurn();
 
 
 private:

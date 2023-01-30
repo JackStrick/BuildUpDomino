@@ -26,15 +26,21 @@ public:
 
 	void ReturnTiles();
 
-	void DisplayTiles();
+	void const DisplayTiles();
 
 	void AddToHand(vector<Tile> a_playerTiles);
 
-	void GetHand();
+	void const GetHand();
 
-	int FirstTilePipTotal();
+	int const FirstTilePipTotal();
 
-	void Strategy() { }
+	void IsTurn();
+
+	bool MyTurn();
+
+	void PlacementOptions();
+
+	void Strategy() {}
 
 	// Selectors
 	unsigned int GetPoints() {};
@@ -47,9 +53,9 @@ private:
 
 	// Data Members
 	unsigned int m_points;
-
-	// Bone yard - All Player Tiles For Game - Black or White
-	vector<Tile> m_playerTiles;
+	bool m_myTurn;
+	vector<Tile> m_boneYard;
+	vector<Tile> m_currentHand;
 
 };
 

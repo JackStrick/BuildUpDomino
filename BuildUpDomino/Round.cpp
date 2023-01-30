@@ -38,7 +38,7 @@ void Round::StartRound()
 		{
 			cout << "\n\nBoth Players Drawing First Tile Of Hand";
 			first = TileCompare(m_human.InitialTile(), m_computer.InitialTile());
-			if (first == 3)
+			if (first == repeat)
 			{
 				cout << "\nTile Values The Same\nTiles added back to players boneyard\n\nPlayers Redrawing Tiles...";
 				m_human.ReturnTiles();
@@ -50,9 +50,18 @@ void Round::StartRound()
 		m_human.AddToHand(m_human.Draw(5));
 		m_computer.AddToHand(m_computer.Draw(5));
 
-		cout << "\n\nYour Current Hand\n";
-		m_human.GetHand();
-
+		unsigned short turnCounter = 12;
+		while (turnCounter > 0)
+		{
+			if (m_human.MyTurn())
+			{
+				//Tile tile = m_human.Play(m_gameBoard);
+				//m_gameBoard.TilePlacement(tile, );
+				m_gameBoard.DisplayGameBoard();
+				SwitchTurn();
+				turnCounter--;
+			}
+		}
 		
 
 				
@@ -70,14 +79,16 @@ void Round::StartRound()
 
 int Round::TileCompare(Tile a_human, Tile a_computer)
 {
-	// If Human tile is larger than computer tile, return true
+	// If Human tile is larger than computer tile, return 1
 	if (a_human.getTotalPips() > a_computer.getTotalPips())
 	{
+		SetTurn(m_human);
 		return 1;
 	}
-	// Computer tile is larger, return false
+	// Computer tile is larger, return 2
 	else if (a_human.getTotalPips() < a_computer.getTotalPips())
 	{
+		SetTurn(m_computer);
 		return 2;
 	}
 	// If tiles are same value then redraw initial tile
@@ -85,5 +96,15 @@ int Round::TileCompare(Tile a_human, Tile a_computer)
 	{
 		return 3;
 	}
+
+}
+
+void Round::SetTurn(Player a_player)
+{
+	a_player.IsTurn();
+}
+
+void Round::SwitchTurn()
+{
 
 }

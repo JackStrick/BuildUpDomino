@@ -22,7 +22,7 @@ int MessageOutput::Welcome()
 	return choice;
 }
 
-void MessageOutput::GameSetup()
+void const MessageOutput::GameSetup()
 {
 	cout << "\n\nShuffling Player and Computer Decks.....";
 	cout << "\nBoth Players Drawing Tiles....";
@@ -30,7 +30,7 @@ void MessageOutput::GameSetup()
 	cout << "\n\nGameboard Setup\n";
 }
 
-void MessageOutput::FirstUp(int a_first, int a_humanTotal, int a_computerTotal)
+void const MessageOutput::FirstUp(int a_first, int a_humanTotal, int a_computerTotal)
 {
 	cout << "\nYour tile value was " << a_humanTotal;
 	cout << "\nThe Computer's tile value was " << a_computerTotal;
@@ -69,12 +69,12 @@ bool MessageOutput::Continue()
 }
 
 
-void MessageOutput::DisplayScore(unsigned short a_playerScore, unsigned short a_cpuScore)
+void const MessageOutput::DisplayScore(unsigned short a_playerScore, unsigned short a_cpuScore)
 {
 
 }
 
-void MessageOutput::Finished()
+void const MessageOutput::Finished()
 {
 
 }

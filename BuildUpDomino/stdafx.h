@@ -11,6 +11,7 @@
 // TODO: reference additional headers your program requires here
 // Standard include files.
 #include <stdio.h>
+#include "MessageOutput.h"
 #include <iostream>
 #include <algorithm>
 #include <iomanip>

@@ -6,6 +6,8 @@ public:
 	Human();
 	~Human();
 
+	Tile Play();
+
 
 private:
 
