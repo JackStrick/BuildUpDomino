@@ -6,7 +6,7 @@ public:
 	Computer();
 	~Computer();
 
-	void Play();
+	bool Play(Tile a_boardTile, Tile a_handtile);
 
 private:
 

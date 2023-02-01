@@ -16,34 +16,42 @@ public:
 
 
 
-	void Play();
+	virtual bool Play(Tile a_boardTile, Tile a_handtile) = 0;
 
 	void Take(vector<Tile> a_tiles);
 
-	vector<Tile> Draw(int a_amount);
+	vector<Tile> Draw();
 
 	Tile InitialTile();
 
 	void ReturnTiles();
 
-	void const DisplayTiles();
+	void const DisplayBoneyard();
 
 	void AddToHand(vector<Tile> a_playerTiles);
 
-	void const GetHand();
+	vector<Tile>& GetHand();
+
+	void RemoveTileFromHand(unsigned int a_loc);
+
+	void const ShowHand();
 
 	int const FirstTilePipTotal();
 
-	void IsTurn();
+	void SetTurn();
 
-	bool MyTurn();
+	bool IsMyTurn();
 
-	void PlacementOptions();
+	void EndTurn();
 
-	void Strategy() {}
+	bool IsValidPlacement(Tile a_boardTile, Tile a_handtile);
+
+	void Strategy() {};
 
 	// Selectors
 	unsigned int GetPoints() {};
+
+	void SetPoints(unsigned int a_points);
 
 
 private:

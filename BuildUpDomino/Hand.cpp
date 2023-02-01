@@ -26,7 +26,7 @@ Tile Hand::GetInitialTile()
 	return tile;
 }
 
-void Hand::SetHand(vector<Tile> a_playerTiles)
+void Hand::SetHand(vector<Tile> &a_playerTiles)
 {
 	for (int i = 0; i < a_playerTiles.size(); i++)
 	{
@@ -41,10 +41,26 @@ int const Hand::InitialTilePipTotal()
 
 void const Hand::DisplayHand()
 {
+	cout << "\n\nYour Hand\n";
 	for (int i = 0; i < m_playerHand.size(); i++)
 	{
 		cout << "{" << m_playerHand.at(i).getColor();
 		cout << m_playerHand.at(i).getLeftPips();
 		cout << m_playerHand.at(i).getRightPips() << "} ";
 	}
+	cout << "\n  ";
+	for (int i = 0; i < m_playerHand.size(); i++)
+	{
+		cout << i << "     ";
+	}
+}
+
+vector<Tile>& Hand::GetCurrentHand()
+{
+	return m_playerHand;
+}
+
+void Hand::Remove(unsigned int a_loc)
+{
+	m_playerHand.erase(m_playerHand.begin() + a_loc);
 }

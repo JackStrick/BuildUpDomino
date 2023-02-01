@@ -16,6 +16,8 @@ public:
 
 	void const DisplayScore(unsigned short a_playerScore, unsigned short a_cpuScore);
 	void const Finished();
+	int const PlacementLocation();
+	int const TileSelection();
 
 
 

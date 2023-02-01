@@ -6,7 +6,7 @@ public:
 	Human();
 	~Human();
 
-	Tile Play();
+	bool Play(Tile a_boardTile, Tile a_handtile);
 
 
 private:

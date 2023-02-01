@@ -19,7 +19,8 @@ public:
 
 	void StartRound();
 	int TileCompare(Tile a_human, Tile a_computer);
-	void SetTurn(Player a_player);
+	void SetPlayerTurn(Player &a_player);
+	bool IsPlaceableTiles(vector<Tile> &a_player1Hand, vector<Tile> &a_player2Hand);
 	void SwitchTurn();
 
 

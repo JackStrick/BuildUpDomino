@@ -17,9 +17,13 @@ public:
 
 	void const DisplayHand();
 
-	void SetHand(vector<Tile> a_playerTiles);
+	vector<Tile>& GetCurrentHand();
+
+	void SetHand(vector<Tile> &a_playerTiles);
 
 	Tile GetInitialTile();
+
+	void Remove(unsigned int a_loc);
 
 
 

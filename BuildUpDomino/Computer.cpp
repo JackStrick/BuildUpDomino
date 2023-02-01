@@ -10,9 +10,11 @@ Computer::~Computer()
 
 }
 
-void Computer::Play()
+bool Computer::Play(Tile a_boardTile, Tile a_handtile)
 {
 	cout << "\n\nComputer's hand: \n";
 	GetHand();
 	Strategy();
+	
+	return true;
 }

@@ -10,16 +10,7 @@ Human::~Human()
 
 }
 
-Tile Human::Play()
+bool Human::Play(Tile a_boardTile, Tile a_handtile)
 {
-	vector<Tile> myHand = Draw(0);
-	//Print(""); Create Print Function to Send to Message Output
-	cout << "\n\nYour hand: \n";
-	GetHand();
-	
-	PlacementOptions();
-	//switch
-
-	return myHand.at(1);
-
+	return IsValidPlacement(a_boardTile, a_handtile);
 }

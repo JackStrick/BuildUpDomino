@@ -28,6 +28,7 @@ vector<Tile> const GameBoard::GetDominoStack()
 
 void const GameBoard::DisplayGameBoard()
 {
+	cout << "\n\n\t\t\tGAMEBOARD";
 	cout << "\n\t";
 	for (int i = 0; i < 6; i++)
 	{

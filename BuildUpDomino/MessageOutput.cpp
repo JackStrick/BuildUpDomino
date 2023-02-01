@@ -46,6 +46,22 @@ void const MessageOutput::FirstUp(int a_first, int a_humanTotal, int a_computerT
 	}
 }
 
+int const MessageOutput::TileSelection()
+{
+	int choice;
+	cout << "\n\nWhich Tile Would You Like To Place?\nOr Enter 99 For Help\n";
+	cin >> choice;
+	return choice;
+}
+
+int const MessageOutput::PlacementLocation()
+{
+	int choice;
+	cout << "\nWhere would you like to place a tile?\n";
+	cin >> choice;
+	return choice;
+}
+
 
 bool MessageOutput::Continue()
 {

@@ -49,7 +49,7 @@ void Tournament::StartGame(int a_choice)
     {
         m_msg.GameSetup();
         m_round.StartRound();
-        ScoreGame(m_playerScore, m_cpuScore);
+        ScoreGame(m_playerScore, m_cpuScore);//PERHAPS CREATE m_round.GetHumanPoints() GetComputerPoints() to return point totals to tournament
     } while (ContinuePlaying());
 
    

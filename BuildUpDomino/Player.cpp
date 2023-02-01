@@ -11,10 +11,6 @@ Player::~Player()
 
 }
 
-void Player::Play()
-{
-
-}
 
 void Player::Take(vector<Tile> a_tiles)
 {
@@ -22,14 +18,38 @@ void Player::Take(vector<Tile> a_tiles)
 }
 
 
-vector<Tile> Player::Draw(int a_amount)
+vector<Tile> Player::Draw()
 {
 	vector<Tile> playerHand;
-	for (int i = 0; i < a_amount; i++)
+	// 6 Tiles for creating gameboard
+	if(m_boneYard.size() == 28)
 	{
-		int selection = rand() % m_boneYard.size();
-		playerHand.push_back(m_boneYard.at(selection));
-		m_boneYard.erase(m_boneYard.begin() + selection);
+		for (int i = 0; i < 6; i++)
+		{
+			int selection = rand() % m_boneYard.size();
+			playerHand.push_back(m_boneYard.at(selection));
+			m_boneYard.erase(m_boneYard.begin() + selection);
+		}
+	}
+	// 5 Tiles while not last hand 
+	else if (m_boneYard.size() > 6)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			int selection = rand() % m_boneYard.size();
+			playerHand.push_back(m_boneYard.at(selection));
+			m_boneYard.erase(m_boneYard.begin() + selection);
+		}
+	}
+	// 4 Tiles for last hand
+	else
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			int selection = rand() % m_boneYard.size();
+			playerHand.push_back(m_boneYard.at(selection));
+			m_boneYard.erase(m_boneYard.begin() + selection);
+		}
 	}
 	return playerHand;
 }
@@ -62,7 +82,7 @@ Tile Player::InitialTile()
 	https://www.tutorialspoint.com/how-to-print-out-the-contents-of-a-vector-in-cplusplus
 
 */
-void const Player::DisplayTiles()
+void const Player::DisplayBoneyard()
 {
 	for (int i = 0; i < m_boneYard.size(); i++)
 	{
@@ -84,28 +104,68 @@ int const Player::FirstTilePipTotal()
 	return m_hand.InitialTilePipTotal();
 }
 
-void const Player::GetHand()
+vector<Tile>& Player::GetHand()
+{
+	return m_hand.GetCurrentHand();
+}
+
+void Player::RemoveTileFromHand(unsigned int a_loc)
+{
+	m_hand.Remove(a_loc);
+}
+
+void const Player::ShowHand()
 {
 	m_hand.DisplayHand();
 }
 
-void Player::IsTurn()
+void Player::SetTurn()
 {
 	m_myTurn = true;
 }
 
-bool Player::MyTurn()
+bool Player::IsMyTurn()
 {
 	return m_myTurn;
 }
 
-void Player::PlacementOptions()
+void Player::EndTurn()
 {
-	
+	m_myTurn = false;
 }
+
+bool Player::IsValidPlacement(Tile a_boardTile, Tile a_handtile)
+{
+	if (a_handtile.getTotalPips() >= a_boardTile.getTotalPips())
+	{
+		return true;
+	}
+	else if (a_handtile.getLeftPips() == a_handtile.getRightPips())
+	{
+		if ((a_boardTile.getLeftPips() != a_boardTile.getRightPips()))
+		{
+			return true;
+		}
+		else if ((a_boardTile.getLeftPips() == a_boardTile.getRightPips()) && (a_handtile.getTotalPips() > a_boardTile.getTotalPips()))
+		{
+			return true;
+		}
+	}
+
+	cout << "\nThis Tile Cannot Be Placed Here\n";
+	return false;
+}
+
+
+
 
 /*int* Player::Strategy()
 {
 	int* pos;
 	return pos;
 }*/
+
+void Player::SetPoints(unsigned int a_points)
+{
+	m_points += a_points;
+}

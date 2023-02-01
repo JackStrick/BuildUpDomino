@@ -24,16 +24,17 @@ void Round::StartRound()
 	m_computer.Take(m_deck.Deal(m_cpuType));
 	
 	// Human Draws 6 and places them on the gameboard
-	m_gameBoard.SetGameBoard(m_human.Draw(6));
+	m_gameBoard.SetGameBoard(m_human.Draw());
 
 	// Computer draws 6 and places them on the gameboard
-	m_gameBoard.SetGameBoard(m_computer.Draw(6));
+	m_gameBoard.SetGameBoard(m_computer.Draw());
 
 	m_gameBoard.DisplayGameBoard();
 
-	int repeat = 3;
-	while (handCount < 3)
+	
+	while (handCount < 4)
 	{
+		int repeat = 3;
 		do
 		{
 			cout << "\n\nBoth Players Drawing First Tile Of Hand";
@@ -47,30 +48,54 @@ void Round::StartRound()
 		} while (first == repeat);
 
 		m_msg.FirstUp(first, m_human.FirstTilePipTotal(), m_computer.FirstTilePipTotal());
-		m_human.AddToHand(m_human.Draw(5));
-		m_computer.AddToHand(m_computer.Draw(5));
+		m_human.AddToHand(m_human.Draw());
+		m_computer.AddToHand(m_computer.Draw());
 
-		unsigned short turnCounter = 12;
-		while (turnCounter > 0)
+		while (IsPlaceableTiles(m_computer.GetHand(), m_human.GetHand()))
 		{
-			if (m_human.MyTurn())
+			if (m_human.IsMyTurn())
 			{
-				//Tile tile = m_human.Play(m_gameBoard);
-				//m_gameBoard.TilePlacement(tile, );
+				int tile, location;
+
+				//Do-While Loop That Takes In Users' Tile Placement and Validates It Or Provides Help
+				do
+				{
+					m_human.ShowHand();
+					m_gameBoard.DisplayGameBoard();
+					tile = m_msg.TileSelection();
+					if (tile == 99)
+					{
+						cout << "\nYou need help";
+						m_human.Strategy();
+						tile = m_msg.TileSelection();
+					}
+					location = m_msg.PlacementLocation();
+				
+					
+				} while (!m_human.Play(m_gameBoard.GetDominoStack().at(location), m_human.GetHand().at(tile)));
+				
+				m_gameBoard.TilePlacement(m_human.GetHand().at(tile), location);
+				m_human.RemoveTileFromHand(tile);
+
+				SwitchTurn();
+			}
+			else if (m_computer.IsMyTurn())
+			{
+				//m_computer.Play();
 				m_gameBoard.DisplayGameBoard();
 				SwitchTurn();
-				turnCounter--;
 			}
 		}
 		
-
-				
-
-
-
-
-
+		/// <summary>
+		/// UpdatePoints();
+		/// ADD ALL TILES WITH WHITE TO PLAYER
+		/// ADD ALL TILES ON TOP WITH BLACK TO PLAYER
+		/// IF PLAYER HAS TILES IN HAND SUBTRACT POINTS - POINTS SHOULDN'T GO BELOW ZERO
+		/// </summary>
+		
 		handCount++;
+		
 	}
 
 	
@@ -82,13 +107,13 @@ int Round::TileCompare(Tile a_human, Tile a_computer)
 	// If Human tile is larger than computer tile, return 1
 	if (a_human.getTotalPips() > a_computer.getTotalPips())
 	{
-		SetTurn(m_human);
+		SetPlayerTurn(m_human);
 		return 1;
 	}
 	// Computer tile is larger, return 2
 	else if (a_human.getTotalPips() < a_computer.getTotalPips())
 	{
-		SetTurn(m_computer);
+		SetPlayerTurn(m_computer);
 		return 2;
 	}
 	// If tiles are same value then redraw initial tile
@@ -99,12 +124,52 @@ int Round::TileCompare(Tile a_human, Tile a_computer)
 
 }
 
-void Round::SetTurn(Player a_player)
+void Round::SetPlayerTurn(Player &a_player)
 {
-	a_player.IsTurn();
+	a_player.SetTurn();
 }
 
 void Round::SwitchTurn()
 {
+	if (m_computer.IsMyTurn())
+	{
+		SetPlayerTurn(m_human);
+		m_computer.EndTurn();
+	}
+	else if (m_human.IsMyTurn())
+	{
+		SetPlayerTurn(m_computer);
+		m_human.EndTurn();
+	}
+}
 
+bool Round::IsPlaceableTiles(vector<Tile> &a_player1Tiles, vector<Tile> &a_player2Tiles)
+{
+	vector<Tile> board = m_gameBoard.GetDominoStack();
+	vector<Tile> playerTilesInHand = a_player1Tiles;
+	playerTilesInHand.insert(playerTilesInHand.begin(), a_player2Tiles.begin(), a_player2Tiles.end());
+
+	//Check first players tiles
+	for (int i = 0; i < board.size(); i++)
+	{
+		for (int i = 0; i < playerTilesInHand.size(); i++)
+		{
+			//Tile total pips larger than on board
+			if (playerTilesInHand.at(i).getTotalPips() >= board.at(i).getTotalPips())
+			{
+				return true;
+			}
+			//If a double tile, it can be placed anywhere unless the stack is a double tile greater to the one in hand
+			else if (playerTilesInHand.at(i).getLeftPips() == playerTilesInHand.at(i).getRightPips())
+			{
+				if ((board.at(i).getLeftPips() == board.at(i).getRightPips()) && (playerTilesInHand.at(i).getTotalPips() > board.at(i).getTotalPips()))
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+	
 }
