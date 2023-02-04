@@ -6,10 +6,11 @@ public:
 	Human();
 	~Human();
 
-	bool Play(Tile a_boardTile, Tile a_handtile);
+	bool Play(Tile a_boardTile, Tile a_handtile) override;
 
 
 private:
+	char m_tileColor = 'B';
 
 };
 

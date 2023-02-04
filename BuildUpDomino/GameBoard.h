@@ -15,6 +15,8 @@ public:
 
 	void const DisplayGameBoard();
 
+	void ClearBoard();
+
 	vector<Tile> const GetDominoStack();
 
 

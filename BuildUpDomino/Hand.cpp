@@ -41,7 +41,6 @@ int const Hand::InitialTilePipTotal()
 
 void const Hand::DisplayHand()
 {
-	cout << "\n\nYour Hand\n";
 	for (int i = 0; i < m_playerHand.size(); i++)
 	{
 		cout << "{" << m_playerHand.at(i).getColor();

@@ -13,6 +13,8 @@ Round::~Round()
 
 void Round::StartRound()
 {
+	
+	//Initializing For New Game
 	int handCount = 0;
 	int first = 0;
 	//The deck is created and shuffled for computer and human
@@ -34,6 +36,7 @@ void Round::StartRound()
 	
 	while (handCount < 4)
 	{
+		cout << "\n\nStarting New Hand.....";
 		int repeat = 3;
 		do
 		{
@@ -50,56 +53,104 @@ void Round::StartRound()
 		m_msg.FirstUp(first, m_human.FirstTilePipTotal(), m_computer.FirstTilePipTotal());
 		m_human.AddToHand(m_human.Draw());
 		m_computer.AddToHand(m_computer.Draw());
-
-		while (IsPlaceableTiles(m_computer.GetHand(), m_human.GetHand()))
+		while (IsPlaceableTiles(m_computer.GetHand()) || IsPlaceableTiles(m_human.GetHand()))
 		{
 			if (m_human.IsMyTurn())
 			{
 				int tile, location;
+				bool play;
 
 				//Do-While Loop That Takes In Users' Tile Placement and Validates It Or Provides Help
 				do
 				{
+					cout << "\n\nYour Hand\n";
 					m_human.ShowHand();
 					m_gameBoard.DisplayGameBoard();
+					cout << "\n\nEnter 99 For Help or 89 to Pass your turn";
 					tile = m_msg.TileSelection();
+					if (tile != 99 && tile != 89)
+					{
+						location = m_msg.PlacementLocation();
+					}
 					if (tile == 99)
 					{
 						cout << "\nYou need help";
-						m_human.Strategy();
+						vector<vector<int>> possibleMoves;
+						possibleMoves = m_human.Strategy(m_gameBoard.GetDominoStack());
+						//m_msg.ShowPossibleMoves(possibleMoves);
 						tile = m_msg.TileSelection();
+						location = m_msg.PlacementLocation();
 					}
-					location = m_msg.PlacementLocation();
+					if (tile == 89)
+					{
+						if (!IsPlaceableTiles(m_human.GetHand()))
+						{
+							cout << "\nNo Playable Tiles So Player Can Pass";
+							break;
+						}
+						else
+						{
+							cout << "\nYou have at least 1 playable tile. You may not pass your turn.";
+							tile = m_msg.TileSelection();
+							location = m_msg.PlacementLocation();
+						}
+					}
+					if (!m_human.Play(m_gameBoard.GetDominoStack().at(location), m_human.GetHand().at(tile)))
+					{
+						play = false;
+						cout << "\nThis Tile Cannot Be Placed Here\n";
+					}
+					else
+					{
+						play = true;
+					}
+				} while (!play);
 				
-					
-				} while (!m_human.Play(m_gameBoard.GetDominoStack().at(location), m_human.GetHand().at(tile)));
-				
-				m_gameBoard.TilePlacement(m_human.GetHand().at(tile), location);
-				m_human.RemoveTileFromHand(tile);
+				if (tile != 89)
+				{
+					cout << "You are ";
+					m_gameBoard.TilePlacement(m_human.GetHand().at(tile), location);
+					m_human.RemoveTileFromHand(tile);
+				}
 
 				SwitchTurn();
 			}
 			else if (m_computer.IsMyTurn())
 			{
-				//m_computer.Play();
-				m_gameBoard.DisplayGameBoard();
+				int tile, location;
+				cout << "\n\nComputer's Hand\n";
+				m_computer.ShowHand();
+				vector<vector<int>> possibleMoves(2);
+				possibleMoves = m_computer.Strategy(m_gameBoard.GetDominoStack());
+				if (possibleMoves[0].size() > 0)
+				{
+					do
+					{
+						int selection = rand() % possibleMoves.at(1).size();
+						location = possibleMoves[0].at(selection);
+						tile = possibleMoves[1].at(selection);
+
+					} while (!m_computer.Play(m_gameBoard.GetDominoStack().at(location), m_computer.GetHand().at(tile)));
+					cout << "\nThe computer is ";
+					m_gameBoard.TilePlacement(m_computer.GetHand().at(tile), location);
+					m_computer.RemoveTileFromHand(tile);
+				}
+				else
+				{
+					cout << "\nComputer Can't Place a Tile";
+				}
 				SwitchTurn();
 			}
 		}
 		
-		/// <summary>
-		/// UpdatePoints();
-		/// ADD ALL TILES WITH WHITE TO PLAYER
-		/// ADD ALL TILES ON TOP WITH BLACK TO PLAYER
-		/// IF PLAYER HAS TILES IN HAND SUBTRACT POINTS - POINTS SHOULDN'T GO BELOW ZERO
-		/// </summary>
-		
-		handCount++;
-		
+		cout << "\nHand Complete!\nUpdating Scoreboard....";
+		UpdatePoints();
+		handCount++;	
 	}
 
-	
+	m_gameBoard.ClearBoard();
 
+	
 }
 
 int Round::TileCompare(Tile a_human, Tile a_computer)
@@ -108,12 +159,14 @@ int Round::TileCompare(Tile a_human, Tile a_computer)
 	if (a_human.getTotalPips() > a_computer.getTotalPips())
 	{
 		SetPlayerTurn(m_human);
+		m_computer.EndTurn();
 		return 1;
 	}
 	// Computer tile is larger, return 2
 	else if (a_human.getTotalPips() < a_computer.getTotalPips())
 	{
 		SetPlayerTurn(m_computer);
+		m_human.EndTurn();
 		return 2;
 	}
 	// If tiles are same value then redraw initial tile
@@ -143,26 +196,28 @@ void Round::SwitchTurn()
 	}
 }
 
-bool Round::IsPlaceableTiles(vector<Tile> &a_player1Tiles, vector<Tile> &a_player2Tiles)
+bool Round::IsPlaceableTiles(vector<Tile> &a_playerTiles)
 {
 	vector<Tile> board = m_gameBoard.GetDominoStack();
-	vector<Tile> playerTilesInHand = a_player1Tiles;
-	playerTilesInHand.insert(playerTilesInHand.begin(), a_player2Tiles.begin(), a_player2Tiles.end());
 
 	//Check first players tiles
 	for (int i = 0; i < board.size(); i++)
 	{
-		for (int i = 0; i < playerTilesInHand.size(); i++)
+		for (int i = 0; i < a_playerTiles.size(); i++)
 		{
 			//Tile total pips larger than on board
-			if (playerTilesInHand.at(i).getTotalPips() >= board.at(i).getTotalPips())
+			if (a_playerTiles.at(i).getTotalPips() >= board.at(i).getTotalPips())
 			{
 				return true;
 			}
 			//If a double tile, it can be placed anywhere unless the stack is a double tile greater to the one in hand
-			else if (playerTilesInHand.at(i).getLeftPips() == playerTilesInHand.at(i).getRightPips())
+			else if (a_playerTiles.at(i).getLeftPips() == a_playerTiles.at(i).getRightPips())
 			{
-				if ((board.at(i).getLeftPips() == board.at(i).getRightPips()) && (playerTilesInHand.at(i).getTotalPips() > board.at(i).getTotalPips()))
+				if (board.at(i).getLeftPips() != board.at(i).getRightPips())
+				{
+					return true;
+				}
+				else if ((board.at(i).getLeftPips() == board.at(i).getRightPips()) && (a_playerTiles.at(i).getTotalPips() > board.at(i).getTotalPips()))
 				{
 					return true;
 				}
@@ -171,5 +226,42 @@ bool Round::IsPlaceableTiles(vector<Tile> &a_player1Tiles, vector<Tile> &a_playe
 	}
 
 	return false;
+}
+
+void Round::UpdatePoints()
+{
+	vector<Tile> board = m_gameBoard.GetDominoStack();
+	for (int i = 0; i < board.size(); i++)
+	{
+		if (board.at(i).getColor() == 'W')
+		{
+			m_computer.SetPoints(board.at(i).getTotalPips());
+		}
+		else if (board.at(i).getColor() == 'B')
+		{
+			m_human.SetPoints(board.at(i).getTotalPips());
+		}
+	}
+
+	//If Tiles in Hand - Decrease Points And Removes Tiles From Hand
+	m_human.DropPoints();
+	m_computer.DropPoints();
 	
+	m_msg.DisplayScore(GetHumanPoints(), GetComputerPoints());
+}
+
+unsigned short const Round::GetHumanPoints()
+{
+	return m_human.GetPoints();
+}
+
+unsigned short const Round::GetComputerPoints()
+{
+	return m_computer.GetPoints();
+}
+
+void Round::ResetPoints()
+{
+	m_human.PointReset();
+	m_computer.PointReset();
 }

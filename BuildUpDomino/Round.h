@@ -20,8 +20,12 @@ public:
 	void StartRound();
 	int TileCompare(Tile a_human, Tile a_computer);
 	void SetPlayerTurn(Player &a_player);
-	bool IsPlaceableTiles(vector<Tile> &a_player1Hand, vector<Tile> &a_player2Hand);
+	bool IsPlaceableTiles(vector<Tile> &a_playerHand);
 	void SwitchTurn();
+	void UpdatePoints();
+	void ResetPoints();
+	unsigned short const GetHumanPoints();
+	unsigned short const GetComputerPoints();
 
 
 private:

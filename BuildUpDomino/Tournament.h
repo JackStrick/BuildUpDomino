@@ -26,7 +26,7 @@ public:
 	void ScoreGame(unsigned short m_playerScore, unsigned short m_cpuScore);
 
 	// User Done With The Game - End
-	void EndGame(unsigned short m_numRounds, unsigned short m_playerScore, unsigned short m_cpuScore);
+	void EndGame();
 
 private:
 	//FileReader m_file;
@@ -34,8 +34,8 @@ private:
 	Round m_round;
 
 	// Variables
-	unsigned short m_playerScore;
-	unsigned short m_cpuScore;
+	unsigned short m_numRoundsCpu;
+	unsigned short m_numRoundsHuman;
 	unsigned short m_numRounds;
 
 

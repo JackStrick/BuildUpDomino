@@ -37,19 +37,18 @@ void const MessageOutput::FirstUp(int a_first, int a_humanTotal, int a_computerT
 	if (a_first == 1)
 	{
 		cout << "\nYour tile value was larger so you'll go first!";
-		cout << "\n\nBoth Players Drawing the rest of their hand...";
 	}
 	else if (a_first == 2)
 	{
 		cout << "\nThe computer tile value was larger so the computer will go first!";
-		cout << "\n\nBoth Players Drawing the rest of their hand...";
 	}
+	cout << "\n\nBoth Players Drawing the rest of their hand...";
 }
 
 int const MessageOutput::TileSelection()
 {
 	int choice;
-	cout << "\n\nWhich Tile Would You Like To Place?\nOr Enter 99 For Help\n";
+	cout << "\n\nWhich Tile Would You Like To Place?\n";
 	cin >> choice;
 	return choice;
 }
@@ -84,14 +83,38 @@ bool MessageOutput::Continue()
 	return true;
 }
 
+/*void MessageOutput::ShowPossibleMoves(vector<vector<int>> a_moves)
+{
+
+}*/
 
 void const MessageOutput::DisplayScore(unsigned short a_playerScore, unsigned short a_cpuScore)
 {
-
+	cout << "\n\n\t\tSCOREBOARD";
+	cout << "\n------------------------------------------------";
+	cout << "\nHuman\t\t\tComputer\n";
+	cout << a_playerScore << "\t\t\t" << a_cpuScore;
 }
 
-void const MessageOutput::Finished()
+void const MessageOutput::Finished(unsigned short a_cpuRounds, unsigned short a_humanRounds)
 {
+	cout << "\n\n\t\tSCOREBOARD";
+	cout << "\n------------------------------------------------";
+	cout << "\nHuman\t\t\tComputer\n";
+	cout << "Rounds: " << a_humanRounds << "\t\t" << "Rounds: " << a_cpuRounds << endl;
+	if (a_cpuRounds > a_humanRounds)
+	{
+		cout << "\nThe computer has won :(";
+	}
+	else if (a_cpuRounds < a_humanRounds)
+	{
+		cout << "\nYou have won!";
+	}
+	else if (a_cpuRounds == a_humanRounds)
+	{
+		cout << "\nThe torunament has ended in a tie";
+	}
 
+	cout << "\n\nThank you for playing!\n" << endl;
 }
 

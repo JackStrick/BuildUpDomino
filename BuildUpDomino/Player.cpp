@@ -32,7 +32,7 @@ vector<Tile> Player::Draw()
 		}
 	}
 	// 5 Tiles while not last hand 
-	else if (m_boneYard.size() > 6)
+	else if (m_boneYard.size() > 4)
 	{
 		for (int i = 0; i < 5; i++)
 		{
@@ -44,7 +44,7 @@ vector<Tile> Player::Draw()
 	// 4 Tiles for last hand
 	else
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			int selection = rand() % m_boneYard.size();
 			playerHand.push_back(m_boneYard.at(selection));
@@ -152,20 +152,69 @@ bool Player::IsValidPlacement(Tile a_boardTile, Tile a_handtile)
 		}
 	}
 
-	cout << "\nThis Tile Cannot Be Placed Here\n";
 	return false;
 }
 
 
 
-
-/*int* Player::Strategy()
+/// <summary>
+/// resource:
+/// https://linuxhint.com/append-vector-cpp/#:~:text=Appending%20to%20a%20vector%20means,to%20append%20is%20push_back().
+/// </summary>
+/// <param name="a_gameboard"></param>
+/// <returns></returns>
+vector<vector<int>> Player::Strategy(vector<Tile> a_gameboard)
 {
-	int* pos;
-	return pos;
-}*/
+	vector<vector<int>> possibleMoves(2);
+	
+	for (int i = 0; i < a_gameboard.size(); i++)
+	{
+		for (int j = 0; j < GetHand().size(); j++)
+		{
+			if (IsValidPlacement(a_gameboard.at(i), GetHand().at(j)))
+			{
+				possibleMoves[0].push_back(i);
+				possibleMoves[1].push_back(j);
+			}
+		}
+	}
+	
+	return possibleMoves;
+}
 
 void Player::SetPoints(unsigned int a_points)
 {
 	m_points += a_points;
+}
+
+unsigned short Player::GetPoints()
+{
+	return m_points;
+}
+
+void Player::DropPoints()
+{
+	if (!GetHand().empty())
+	{
+		int handSize = GetHand().size();
+		for (int i = 0; i < handSize; i++)
+		{
+			int pips = GetHand().at(0).getTotalPips();
+			if ((m_points - pips) < 0)
+			{
+				m_points = 0;
+			}
+			else
+			{
+				m_points -= pips;
+			}
+			
+			RemoveTileFromHand(0);
+		}
+	}
+}
+
+void Player::PointReset()
+{
+	m_points = 0;
 }

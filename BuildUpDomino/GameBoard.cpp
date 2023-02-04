@@ -55,5 +55,12 @@ void const GameBoard::DisplayGameBoard()
 
 void GameBoard::TilePlacement(Tile a_tile, int a_pos)
 {
+	cout << "placing tile {" << a_tile.getColor() << a_tile.getLeftPips() << a_tile.getRightPips() << "} ";
+	cout << "on stack " << a_pos;
 	m_Stack.at(a_pos) = a_tile;
+}
+
+void GameBoard::ClearBoard()
+{
+	m_Stack.clear();
 }

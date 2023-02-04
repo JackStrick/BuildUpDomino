@@ -46,12 +46,14 @@ public:
 
 	bool IsValidPlacement(Tile a_boardTile, Tile a_handtile);
 
-	void Strategy() {};
+	vector<vector<int>> Strategy(vector<Tile> a_gameboard);
 
 	// Selectors
-	unsigned int GetPoints() {};
+	unsigned short GetPoints();
 
 	void SetPoints(unsigned int a_points);
+	void DropPoints();
+	void PointReset();
 
 
 private:
@@ -60,7 +62,7 @@ private:
 
 
 	// Data Members
-	unsigned int m_points;
+	unsigned short m_points;
 	bool m_myTurn;
 	vector<Tile> m_boneYard;
 	vector<Tile> m_currentHand;

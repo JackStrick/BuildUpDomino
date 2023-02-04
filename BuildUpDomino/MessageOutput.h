@@ -15,9 +15,10 @@ public:
 	bool Continue();
 
 	void const DisplayScore(unsigned short a_playerScore, unsigned short a_cpuScore);
-	void const Finished();
+	void const Finished(unsigned short a_cpuRounds, unsigned short a_humanRounds);
 	int const PlacementLocation();
 	int const TileSelection();
+	//void ShowPossibleMoves(vector<vector<int>> a_moves);
 
 
 
