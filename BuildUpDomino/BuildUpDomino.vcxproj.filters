@@ -87,4 +87,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="First.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Second.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Third.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Fourth.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Fifth.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

@@ -31,28 +31,20 @@ DESCRIPTION
 */
 void Tournament::StartGame(int a_choice)
 {
-    ///Initialize For File
-
-
-
-    /// 
-    /// If Choice is 1 Initilize New Game
-    /// 
-    m_numRoundsCpu = 0;
-    m_numRoundsHuman = 0;
-    m_numRounds = 0;
-    //Choice will determine if new game or from file
-   /* switch (a_choice)
+    ///Initialize For New Game
+    if (a_choice == 1)
     {
-        case 1: 
-            StartNew;
-            break;
-        case 2: 
-            StartFromFile;
-            break;
+        m_numRoundsCpu = 0;
+        m_numRoundsHuman = 0;
+        m_numRounds = 0;
+    }
+
+    // Start game from saved file
+    if (a_choice == 2)
+    {
+        StartFromFile();
     }
     
-   */
     do
     {
         m_msg.GameSetup();
@@ -66,7 +58,10 @@ void Tournament::StartGame(int a_choice)
    
 }
 
+void Tournament::StartFromFile()
+{
 
+}
 
 bool Tournament::ContinuePlaying()
 {

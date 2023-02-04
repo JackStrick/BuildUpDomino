@@ -16,6 +16,8 @@ public:
 	// Destructor
 	~Tournament();
 
+	void StartFromFile();
+
 	//Start Game - Begins the program by initializing setup
 	void StartGame(int a_choice);
 

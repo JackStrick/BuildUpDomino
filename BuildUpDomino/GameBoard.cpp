@@ -30,9 +30,9 @@ void const GameBoard::DisplayGameBoard()
 {
 	cout << "\n\n\t\t\tGAMEBOARD";
 	cout << "\n\t";
-	for (int i = 0; i < 6; i++)
+	for (int i = 1; i < 7; i++)
 	{
-		cout << i << "\t";			
+		cout << "B" << i  << "\t";
 	}
 	cout << "\n";
 	for (int i = 0; i < m_Stack.size(); i++)
@@ -47,16 +47,27 @@ void const GameBoard::DisplayGameBoard()
 		cout << m_Stack.at(i).getRightPips() << "} ";
 	}
 	cout << "\n\t";
-	for (int i = 6; i < 12; i++)
+	for (int i = 1; i < 7; i++)
 	{
-		cout << i << "\t";
+		cout << "W" << i << "\t";
 	}
 }
 
 void GameBoard::TilePlacement(Tile a_tile, int a_pos)
 {
+	string position;
+	if (a_pos > 5)
+	{
+		position = "W" + to_string(a_pos - 5);
+	}
+
+	else if (a_pos <= 5)
+	{
+		position = "B" + to_string(a_pos + 1);
+	}
+
 	cout << "placing tile {" << a_tile.getColor() << a_tile.getLeftPips() << a_tile.getRightPips() << "} ";
-	cout << "on stack " << a_pos;
+	cout << "on stack " << position;
 	m_Stack.at(a_pos) = a_tile;
 }
 

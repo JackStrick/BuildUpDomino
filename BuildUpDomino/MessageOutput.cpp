@@ -56,8 +56,25 @@ int const MessageOutput::TileSelection()
 int const MessageOutput::PlacementLocation()
 {
 	int choice;
-	cout << "\nWhere would you like to place a tile?\n";
-	cin >> choice;
+	string location;
+
+	do
+	{
+		cout << "\nWhere would you like to place a tile?\n";
+		cin >> location;
+		location[0]=toupper(location[0]);
+	} while ((location[0] != 'B' && location[0] != 'W') && (int(location[1]) > 6 || (int(location[1]) < 1)));
+	
+
+	
+	if (location[0] == 'B')
+	{
+		choice = int(location[1]) - 49;
+	}
+	else if (location[0] == 'W')
+	{
+		choice = int(location[1]) - 43;
+	}
 	return choice;
 }
 

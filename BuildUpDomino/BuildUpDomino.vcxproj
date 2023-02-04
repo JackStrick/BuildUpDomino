@@ -153,6 +153,13 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tournament.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Fifth.txt" />
+    <Text Include="First.txt" />
+    <Text Include="Fourth.txt" />
+    <Text Include="Second.txt" />
+    <Text Include="Third.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
