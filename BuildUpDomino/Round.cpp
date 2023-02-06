@@ -11,48 +11,46 @@ Round::~Round()
 
 }
 
-void Round::StartRound()
+void Round::StartRound(int a_choice)
 {
+	//Initializing For Data For New Game
+	if (a_choice == 1)
+	{
+		StartNew();
+	}
 	
-	//Initializing For New Game
-	int handCount = 0;
-	int first = 0;
-	//The deck is created and shuffled for computer and human
-	m_deck.GenerateTiles();
-
-	// Human takes their 28 tiles
-	m_human.Take(m_deck.Deal(m_humanType));
-	// Computer takes their 28 tiles
-	m_computer.Take(m_deck.Deal(m_cpuType));
-	
-	// Human Draws 6 and places them on the gameboard
-	m_gameBoard.SetGameBoard(m_human.Draw());
-
-	// Computer draws 6 and places them on the gameboard
-	m_gameBoard.SetGameBoard(m_computer.Draw());
+	if (a_choice == 2)
+	{
+		StartFromFile();
+	}
 
 	m_gameBoard.DisplayGameBoard();
-
 	
-	while (handCount < 4)
+	while (m_handCount < 4)
 	{
-		cout << "\n\nStarting New Hand.....";
-		int repeat = 3;
-		do
+		int first;
+		if (m_computer.GetHand().empty() && m_human.GetHand().empty())
 		{
-			cout << "\n\nBoth Players Drawing First Tile Of Hand";
-			first = TileCompare(m_human.InitialTile(), m_computer.InitialTile());
-			if (first == repeat)
+			first = 0;
+			cout << "\n\nStarting New Hand.....";
+			int repeat = 3;
+			do
 			{
-				cout << "\nTile Values The Same\nTiles added back to players boneyard\n\nPlayers Redrawing Tiles...";
-				m_human.ReturnTiles();
-				m_computer.ReturnTiles();
-			}
-		} while (first == repeat);
+				cout << "\n\nBoth Players Drawing First Tile Of Hand";
+				first = TileCompare(m_human.InitialTile(), m_computer.InitialTile());
+				if (first == repeat)
+				{
+					cout << "\nTile Values The Same\nTiles added back to players boneyard\n\nPlayers Redrawing Tiles...";
+					m_human.ReturnTiles();
+					m_computer.ReturnTiles();
+				}
+			} while (first == repeat);
 
-		m_msg.FirstUp(first, m_human.FirstTilePipTotal(), m_computer.FirstTilePipTotal());
-		m_human.AddToHand(m_human.Draw());
-		m_computer.AddToHand(m_computer.Draw());
+			m_msg.FirstUp(first, m_human.FirstTilePipTotal(), m_computer.FirstTilePipTotal());
+			m_human.AddToHand(m_human.Draw());
+			m_computer.AddToHand(m_computer.Draw());
+		}
+		
 		while (IsPlaceableTiles(m_computer.GetHand()) || IsPlaceableTiles(m_human.GetHand()))
 		{
 			if (m_human.IsMyTurn())
@@ -143,14 +141,183 @@ void Round::StartRound()
 			}
 		}
 		
+		if (!m_human.GetHand().empty() && !IsPlaceableTiles(m_human.GetHand()) || !m_computer.GetHand().empty() && !IsPlaceableTiles(m_computer.GetHand()))
+		{
+			cout << "\nNo more tiles in either hand can be placed\n\n";
+		}
+
 		cout << "\nHand Complete!\nUpdating Scoreboard....";
 		UpdatePoints();
-		handCount++;	
+		m_handCount++;	
 	}
 
 	m_gameBoard.ClearBoard();
+	RoundWin();
+}
 
+void Round::StartNew()
+{
+	m_roundCount = 0;
+	m_handCount = 0;
+	//The deck is created and shuffled for computer and human
+	m_deck.GenerateTiles();
+
+	// Human takes their 28 tiles
+	m_human.Take(m_deck.Deal(m_humanType));
+	// Computer takes their 28 tiles
+	m_computer.Take(m_deck.Deal(m_cpuType));
+
+	// Human Draws 6 and places them on the gameboard
+	m_gameBoard.SetGameBoard(m_human.Draw());
+
+	// Computer draws 6 and places them on the gameboard
+	m_gameBoard.SetGameBoard(m_computer.Draw());
+}
+
+void Round::StartFromFile()
+{
+	do
+	{
+		string filePath;
+		cout << "\nPlease enter the file path: ";
+		cin >> filePath;
+
+		m_sfile.open(filePath);
+
+		if (!m_sfile) {
+			m_sfile.close();
+			cin.clear();
+			cout << "\n\nFile Does Not Exist.\n";
+		}
+	} while (!m_sfile);
+
+	m_msg.LoadGame();
+
+	string line;
+	int score;
+	int rounds;
+	vector<Tile> compStacks;
+	vector<Tile> humanStacks;
+
+	if (m_sfile.is_open())
+	{
+		m_sfile >> line;
+		//Reading Computer
+		if (line == "Computer:");
+		{
+			m_sfile >> line;
+			if (line == "Stacks:")
+			{
+				getline(m_sfile, line);
+				if (line != " ")
+				{
+					compStacks = m_computer.SetStacks(line);
+				}
+			}
+			m_sfile >> line;
+			if (line == "Boneyard:")
+			{
+				getline(m_sfile, line);
+				if (line != " ")
+				{
+					m_computer.SetBoneyard(line);
+				}
+			}
+			m_sfile >> line;
+			if (line == "Hand:")
+			{
+				getline(m_sfile, line);
+				if (line != " ")
+				{
+					m_computer.SetHand(line);
+				}
+			}
+			m_sfile >> line;
+			if (line == "Score:")
+			{
+				m_sfile >> score;
+				m_computer.PointReset();
+				m_computer.SetPoints(score);
+			}
+			m_sfile >> line;
+			m_sfile >> line;
+			if (line == "Won:")
+			{
+				m_sfile >> rounds;
+				m_computer.SetRoundsWon(rounds);
+			}
+			m_sfile >> line;
+		}
+		
+		//Reading Human
+		if (line == "Human:");
+		{
+			m_sfile >> line;
+			if (line == "Stacks:")
+			{
+				getline(m_sfile, line);
+				if (line != " ")
+				{
+					humanStacks = m_human.SetStacks(line);
+				}
+			}
+			m_sfile >> line;
+			if (line == "Boneyard:")
+			{
+				getline(m_sfile, line);
+				if (line != " ")
+				{
+					m_human.SetBoneyard(line);
+				}
+			}
+			m_sfile >> line;
+			if (line == "Hand:")
+			{
+				getline(m_sfile, line);
+				if (line != " ")
+				{
+					m_human.SetHand(line);
+				}
+			}
+			m_sfile >> line;
+			if (line == "Score:")
+			{
+				m_sfile >> score;
+				m_human.PointReset();
+				m_human.SetPoints(score);
+			}
+			m_sfile >> line;
+			m_sfile >> line;
+			if (line == "Won:")
+			{
+				m_sfile >> rounds;
+				m_human.SetRoundsWon(rounds);
+			}
+		}
+
+		m_sfile >> line;
+		if (line == "Turn:")
+		{
+			m_sfile >> line;
+			if (line == "Computer")
+			{
+				m_computer.SetTurn();
+				m_human.EndTurn();
+				cout << "\n\nComputer Will Go First\n\n";
+			}
+			else if (line == "Human")
+			{
+				m_human.SetTurn();
+				m_computer.EndTurn();
+				cout << "\n\nHuman Will Go First\n\n";
+			}
+		}
+	}
 	
+	//Comp Gameboard after human gameboard
+	m_gameBoard.SetGameBoard(humanStacks);
+	m_gameBoard.SetGameBoard(compStacks);
+	m_sfile.close();
 }
 
 int Round::TileCompare(Tile a_human, Tile a_computer)
@@ -248,6 +415,19 @@ void Round::UpdatePoints()
 	m_computer.DropPoints();
 	
 	m_msg.DisplayScore(GetHumanPoints(), GetComputerPoints());
+}
+
+void Round::RoundWin()
+{
+	if (GetHumanPoints() > GetComputerPoints())
+	{
+		m_human.WonRound();
+	}
+	else if (GetHumanPoints() < GetComputerPoints())
+	{
+		m_computer.WonRound();
+	}
+	
 }
 
 unsigned short const Round::GetHumanPoints()

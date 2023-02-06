@@ -16,7 +16,7 @@ public:
 	// Destructor
 	~Tournament();
 
-	void StartFromFile();
+	//void StartFromFile();
 
 	//Start Game - Begins the program by initializing setup
 	void StartGame(int a_choice);
@@ -25,7 +25,7 @@ public:
 	bool ContinuePlaying();
 
 	// Get Current Score of Game
-	void ScoreGame(unsigned short m_playerScore, unsigned short m_cpuScore);
+	void ScoreGame();
 
 	// User Done With The Game - End
 	void EndGame();
@@ -34,6 +34,7 @@ private:
 	//FileReader m_file;
 	MessageOutput m_msg;
 	Round m_round;
+	ifstream m_sfile;
 
 	// Variables
 	unsigned short m_numRoundsCpu;

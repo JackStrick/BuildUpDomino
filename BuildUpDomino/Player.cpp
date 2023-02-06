@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-	m_points = 0;
+	//m_points = 0;
 }
 
 Player::~Player()
@@ -15,6 +15,62 @@ Player::~Player()
 void Player::Take(vector<Tile> a_tiles)
 {
 	m_boneYard = a_tiles;
+}
+
+vector<Tile> Player::SetStacks(string a_stack)
+{
+	char color;
+	int left;
+	int right;
+	vector<Tile> stackTiles;
+	for (int i = 0; a_stack[i] != '\0'; i++)
+	{
+		if (a_stack[i] != ' ')
+		{
+			if (a_stack[i] == 'W' || a_stack[i] == 'B')
+			{
+				Tile tile(a_stack[i], a_stack[i + 1] - 48, a_stack[i + 2] - 48);
+				stackTiles.push_back(tile);
+			}
+		}
+	}
+	return stackTiles;
+}
+
+void Player::SetBoneyard(string a_boneyard)
+{
+	char color;
+	int left;
+	int right;
+	
+	for (int i = 0; a_boneyard[i] != '\0'; i++)
+	{
+		if (a_boneyard[i] != ' ')
+		{
+			if (a_boneyard[i] == 'W' || a_boneyard[i] == 'B')
+			{
+				Tile tile(a_boneyard[i], a_boneyard[i + 1] - 48, a_boneyard[i + 2] - 48);
+				m_boneYard.push_back(tile);
+			}
+		}
+	}
+}
+
+void Player::SetHand(string a_hand)
+{
+	vector<Tile> handTiles;
+	for (int i = 0; a_hand[i] != '\0'; i++)
+	{
+		if (a_hand[i] != ' ')
+		{
+			if (a_hand[i] == 'W' || a_hand[i] == 'B')
+			{
+				Tile tile(a_hand[i], a_hand[i + 1] - 48, a_hand[i + 2] - 48);
+				handTiles.push_back(tile);
+			}
+		}
+	}
+	AddToHand(handTiles);
 }
 
 
@@ -214,7 +270,17 @@ void Player::DropPoints()
 	}
 }
 
+void Player::SetRoundsWon(unsigned short a_rounds)
+{
+	m_roundsWon = a_rounds;
+}
+
 void Player::PointReset()
 {
 	m_points = 0;
+}
+
+void Player::WonRound()
+{
+	m_roundsWon += 1;
 }

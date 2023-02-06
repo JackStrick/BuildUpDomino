@@ -54,6 +54,23 @@ public:
 	void SetPoints(unsigned int a_points);
 	void DropPoints();
 	void PointReset();
+	void WonRound();
+
+	vector<Tile> SetStacks(string a_stack);
+	
+	
+	void SetBoneyard(string a_boneyard);
+
+	void SetHand(string a_hand);
+
+	void SetRoundsWon(unsigned short a_rounds);
+
+	/*
+	void SetHand();
+	void SetPointsFromFile();
+	void SetRoundsWon();
+	
+	*/
 
 
 private:
@@ -64,6 +81,7 @@ private:
 	// Data Members
 	unsigned short m_points;
 	bool m_myTurn;
+	unsigned short m_roundsWon;
 	vector<Tile> m_boneYard;
 	vector<Tile> m_currentHand;
 

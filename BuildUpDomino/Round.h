@@ -17,7 +17,9 @@ public:
 	Round();
 	~Round();
 
-	void StartRound();
+	void StartRound(int a_choice);
+	void StartNew();
+	void StartFromFile();
 	int TileCompare(Tile a_human, Tile a_computer);
 	void SetPlayerTurn(Player &a_player);
 	bool IsPlaceableTiles(vector<Tile> &a_playerHand);
@@ -26,6 +28,7 @@ public:
 	void ResetPoints();
 	unsigned short const GetHumanPoints();
 	unsigned short const GetComputerPoints();
+	void RoundWin();
 
 
 private:
@@ -36,8 +39,10 @@ private:
 	GameBoard m_gameBoard;
 	Hand m_hand;
 	MessageOutput m_msg;
+	fstream m_sfile;
 
-
+	unsigned short m_handCount;
+	unsigned short m_roundCount;
 	unsigned short m_humanType = 1;
 	unsigned short m_cpuType = 2;
 

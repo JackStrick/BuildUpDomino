@@ -30,6 +30,11 @@ void const MessageOutput::GameSetup()
 	cout << "\n\nGameboard Setup\n";
 }
 
+void const MessageOutput::LoadGame()
+{
+	cout << "\n\nLoading Game From File......\n";
+}
+
 void const MessageOutput::FirstUp(int a_first, int a_humanTotal, int a_computerTotal)
 {
 	cout << "\nYour tile value was " << a_humanTotal;
@@ -55,7 +60,7 @@ int const MessageOutput::TileSelection()
 
 int const MessageOutput::PlacementLocation()
 {
-	int choice;
+	int choice = 0;
 	string location;
 
 	do
@@ -134,4 +139,5 @@ void const MessageOutput::Finished(unsigned short a_cpuRounds, unsigned short a_
 
 	cout << "\n\nThank you for playing!\n" << endl;
 }
+
 

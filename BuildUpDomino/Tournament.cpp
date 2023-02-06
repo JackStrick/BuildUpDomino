@@ -12,6 +12,7 @@ Tournament::Tournament()
 
 Tournament::~Tournament()
 {
+    m_sfile.close();
 }
 
 /*
@@ -39,17 +40,15 @@ void Tournament::StartGame(int a_choice)
         m_numRounds = 0;
     }
 
-    // Start game from saved file
-    if (a_choice == 2)
-    {
-        StartFromFile();
-    }
-    
     do
     {
-        m_msg.GameSetup();
-        m_round.StartRound();
-        ScoreGame(m_round.GetHumanPoints(), m_round.GetComputerPoints());
+        if (a_choice == 1)
+        {
+            m_msg.GameSetup();
+        }
+       
+        m_round.StartRound(a_choice);
+        ScoreGame();
         m_round.ResetPoints();
         m_numRounds++;
     } while (ContinuePlaying());
@@ -57,11 +56,20 @@ void Tournament::StartGame(int a_choice)
     EndGame();
    
 }
-
+/*
 void Tournament::StartFromFile()
 {
+    do
+    {
+        string filePath = m_msg.GetFileFromUser();
 
-}
+        m_sfile.open(filePath);
+
+        if (!m_sfile) {
+            cout << "\n\nFile Does Not Exist.\n";
+        }
+    } while (!m_sfile); 
+}*/
 
 bool Tournament::ContinuePlaying()
 {
@@ -72,20 +80,22 @@ bool Tournament::ContinuePlaying()
     return true;
 }
 
-void Tournament::ScoreGame(unsigned short a_playerScore, unsigned short a_cpuScore)
+void Tournament::ScoreGame()
 {
-    m_msg.DisplayScore(a_playerScore, a_cpuScore);
-    if (a_playerScore > a_cpuScore)
+    int human = m_round.GetHumanPoints();
+    int cpu = m_round.GetComputerPoints();
+    m_msg.DisplayScore(human, cpu);
+    if (human > cpu)
     {
         m_numRoundsHuman++;
         cout << "\n\nPlayer wins round";
     }
-    else if (a_cpuScore > a_playerScore)
+    else if (cpu > human)
     {
         m_numRoundsCpu++;
         cout << "\n\nComputer wins round";
     }
-    else if (a_cpuScore == a_playerScore)
+    else if (cpu == human)
     {
         cout << "\n\nRound ended in a tie";
     }

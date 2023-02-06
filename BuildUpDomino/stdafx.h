@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "MessageOutput.h"
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <iomanip>
 #include <stdlib.h>

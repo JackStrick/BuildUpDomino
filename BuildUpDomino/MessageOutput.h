@@ -9,6 +9,7 @@ public:
 	int Welcome();
 
 	void const GameSetup();
+	void const LoadGame();
 
 	void const FirstUp(int a_first, int a_humanTotal, int a_computerTotal);
 	//Continue - Asks the user if they want to keep playing the tournament
