@@ -15,8 +15,9 @@ public:
 	~Player();
 
 
+	virtual void Choice() = 0;
 
-	virtual bool Play(Tile a_boardTile, Tile a_handtile) = 0;
+	bool Play(Tile a_boardTile, Tile a_handtile);
 
 	void Take(vector<Tile> a_tiles);
 
@@ -25,6 +26,8 @@ public:
 	Tile InitialTile();
 
 	void ReturnTiles();
+
+	void ShuffleBoneyard();
 
 	void const DisplayBoneyard();
 

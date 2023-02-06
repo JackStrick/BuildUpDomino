@@ -7,7 +7,7 @@ public:
 	Computer();
 	~Computer();
 
-	bool Play(Tile a_boardTile, Tile a_handtile) override;
+	void Choice();
 
 private:
 	char m_tileColor = 'W';

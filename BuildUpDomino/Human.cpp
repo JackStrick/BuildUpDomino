@@ -10,7 +10,7 @@ Human::~Human()
 
 }
 
-bool Human::Play(Tile a_boardTile, Tile a_handtile)
+void Human::Choice()
 {
-	return IsValidPlacement(a_boardTile, a_handtile);
+
 }

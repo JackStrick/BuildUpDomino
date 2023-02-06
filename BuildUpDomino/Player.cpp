@@ -154,6 +154,13 @@ void Player::ReturnTiles()
 	Tile playerTile = m_hand.GetInitialTile();
 	m_hand.ClearHand();
 	m_boneYard.push_back(playerTile);
+	ShuffleBoneyard();
+}
+
+void Player::ShuffleBoneyard()
+{
+	srand(time(0));
+	random_shuffle(m_boneYard.begin(), m_boneYard.end());
 }
 
 int const Player::FirstTilePipTotal()
@@ -212,7 +219,10 @@ bool Player::IsValidPlacement(Tile a_boardTile, Tile a_handtile)
 	return false;
 }
 
-
+bool Player::Play(Tile a_boardTile, Tile a_handtile)
+{
+	return IsValidPlacement(a_boardTile, a_handtile);
+}
 
 /// <summary>
 /// resource:
