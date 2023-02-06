@@ -37,8 +37,6 @@ private:
 	ifstream m_sfile;
 
 	// Variables
-	unsigned short m_numRoundsCpu;
-	unsigned short m_numRoundsHuman;
 	unsigned short m_numRounds;
 
 

@@ -28,7 +28,11 @@ public:
 	void ResetPoints();
 	unsigned short const GetHumanPoints();
 	unsigned short const GetComputerPoints();
+	unsigned short const GetRoundsHumanWon();
+	unsigned short const GetRoundsComputerWon();
 	void RoundWin();
+
+	void SaveGame();
 
 
 private:

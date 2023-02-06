@@ -118,6 +118,7 @@ void Player::AddToHand(vector<Tile> a_playerTiles)
 
 Tile Player::InitialTile()
 {
+
 	int selection = rand() % m_boneYard.size();
 
 	Tile playerTile = m_boneYard.at(selection);
@@ -283,4 +284,14 @@ void Player::PointReset()
 void Player::WonRound()
 {
 	m_roundsWon += 1;
+}
+
+vector<Tile> Player::GetBoneYard()
+{
+	return m_boneYard;
+}
+
+unsigned short Player::GetRoundsWon()
+{
+	return m_roundsWon;
 }

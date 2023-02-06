@@ -1,6 +1,7 @@
 #include "Round.h"
 #include "MessageOutput.h"
 
+
 Round::Round()
 {
 
@@ -29,7 +30,7 @@ void Round::StartRound(int a_choice)
 	while (m_handCount < 4)
 	{
 		int first;
-		if (m_computer.GetHand().empty() && m_human.GetHand().empty())
+		if ((m_computer.GetHand().empty() && m_human.GetHand().empty()) && !m_computer.GetBoneYard().empty() && !m_human.GetBoneYard().empty())
 		{
 			first = 0;
 			cout << "\n\nStarting New Hand.....";
@@ -50,7 +51,7 @@ void Round::StartRound(int a_choice)
 			m_human.AddToHand(m_human.Draw());
 			m_computer.AddToHand(m_computer.Draw());
 		}
-		
+
 		while (IsPlaceableTiles(m_computer.GetHand()) || IsPlaceableTiles(m_human.GetHand()))
 		{
 			if (m_human.IsMyTurn())
@@ -111,7 +112,17 @@ void Round::StartRound(int a_choice)
 					m_human.RemoveTileFromHand(tile);
 				}
 
-				SwitchTurn();
+				//Prompt User to Save and Quit Game
+				bool quit = m_msg.EndGame();
+				if (quit)
+				{
+					SaveGame();
+				}
+
+				else
+				{
+					SwitchTurn();
+				}
 			}
 			else if (m_computer.IsMyTurn())
 			{
@@ -143,7 +154,7 @@ void Round::StartRound(int a_choice)
 		
 		if (!m_human.GetHand().empty() && !IsPlaceableTiles(m_human.GetHand()) || !m_computer.GetHand().empty() && !IsPlaceableTiles(m_computer.GetHand()))
 		{
-			cout << "\nNo more tiles in either hand can be placed\n\n";
+			cout << "\n\nNo more tiles in either hand can be placed\n\n";
 		}
 
 		cout << "\nHand Complete!\nUpdating Scoreboard....";
@@ -313,6 +324,25 @@ void Round::StartFromFile()
 			}
 		}
 	}
+
+	int bySize = m_human.GetBoneYard().size();
+	switch (bySize)
+	{
+		case 22: 
+			m_handCount = 0;
+			break;
+		case 16:
+			m_handCount = 1;
+			break;
+		case 10:
+			m_handCount = 2;
+			break;
+		default:
+			m_handCount = 3;
+			break;
+		
+	}
+	
 	
 	//Comp Gameboard after human gameboard
 	m_gameBoard.SetGameBoard(humanStacks);
@@ -414,7 +444,6 @@ void Round::UpdatePoints()
 	m_human.DropPoints();
 	m_computer.DropPoints();
 	
-	m_msg.DisplayScore(GetHumanPoints(), GetComputerPoints());
 }
 
 void Round::RoundWin()
@@ -440,8 +469,144 @@ unsigned short const Round::GetComputerPoints()
 	return m_computer.GetPoints();
 }
 
+unsigned short const Round::GetRoundsHumanWon()
+{
+	return m_human.GetRoundsWon();
+}
+
+unsigned short const Round::GetRoundsComputerWon()
+{
+	return m_computer.GetRoundsWon();
+}
+
 void Round::ResetPoints()
 {
 	m_human.PointReset();
 	m_computer.PointReset();
+}
+
+/// <summary>
+/// 
+/// 
+/// 
+/// Resources:	
+///			https://stackoverflow.com/questions/5252612/replace-space-with-an-underscore
+///			https://www.educative.io/answers/how-to-get-the-current-date-and-time-in-cpp
+///				
+/// </summary>
+void Round::SaveGame()
+{
+	vector<Tile> temp;
+
+	time_t now = time(0);
+	// convert now to string form
+	string date = ctime(&now);
+	replace(date.begin(), date.end(), ' ', '_');
+	date.erase(date.end() - 1);
+
+	//Create File Name With Data and txt File Extension
+	string fileName = "BuildUpSave.txt";
+	
+	//Create New File
+	ofstream file("C:\\Users\\jstrickland\\Documents\\CMPS366\\" + fileName);
+
+	if (file.is_open())
+	{
+		//SAVE ALL COMPUTER DATA
+
+		file << "Computer:" << endl;
+
+		//Write Computer Stack To File
+		temp = m_gameBoard.GetDominoStack();
+		file << "\tStacks: ";
+		for (int i = 6; i < temp.size(); i++)
+		{
+			file << temp.at(i).getColor();
+			file << temp.at(i).getLeftPips();
+			file << temp.at(i).getRightPips() << " ";
+		}
+
+		//Write Boneyard to file
+		temp = m_computer.GetBoneYard();
+		file << "\n\tBoneyard: ";
+		for (int i = 0; i < temp.size(); i++)
+		{
+			file << temp.at(i).getColor();
+			file << temp.at(i).getLeftPips();
+			file << temp.at(i).getRightPips() << " ";
+		}
+
+		//Write Hand to file
+		temp = m_computer.GetHand();
+		file << "\n\tHand: ";
+		for (int i = 0; i < temp.size(); i++)
+		{
+			file << temp.at(i).getColor();
+			file << temp.at(i).getLeftPips();
+			file << temp.at(i).getRightPips() << " ";
+		}
+
+		//Write Score
+		file << "\n\tScore: " << m_computer.GetPoints();
+
+		//Write Rounds Won
+		file << "\n\tRounds Won: " << m_computer.GetRoundsWon();
+
+
+		//SAVE ALL HUMAN DATA
+
+		file << "\n\nHuman:" << endl;
+
+		//Write Computer Stack To File
+		temp = m_gameBoard.GetDominoStack();
+		file << "\tStacks: ";
+		for (int i = 0; i < temp.size() - 6; i++)
+		{
+			file << temp.at(i).getColor();
+			file << temp.at(i).getLeftPips();
+			file << temp.at(i).getRightPips() << " ";
+		}
+
+		//Write Boneyard to file
+		temp = m_human.GetBoneYard();
+		file << "\n\tBoneyard: ";
+		for (int i = 0; i < temp.size(); i++)
+		{
+			file << temp.at(i).getColor();
+			file << temp.at(i).getLeftPips();
+			file << temp.at(i).getRightPips() << " ";
+		}
+
+		//Write Hand to file
+		temp = m_human.GetHand();
+		file << "\n\tHand: ";
+		for (int i = 0; i < temp.size(); i++)
+		{
+			file << temp.at(i).getColor();
+			file << temp.at(i).getLeftPips();
+			file << temp.at(i).getRightPips() << " ";
+		}
+
+		//Write Score
+		file << "\n\tScore: " << m_human.GetPoints();
+
+		//Write Rounds Won
+		file << "\n\tRounds Won: " << m_human.GetRoundsWon();
+
+		//Write Turn
+		if (m_computer.IsMyTurn())
+		{
+			file << "\n\nTurn: Computer";
+		}
+		else if (m_human.IsMyTurn())
+		{
+			file << "\n\nTurn: Human";
+		}
+	}
+
+	//Close File
+	file.close();
+
+	//END PROGRAM
+	exit(0);
 }

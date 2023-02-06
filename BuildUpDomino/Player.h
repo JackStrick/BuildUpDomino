@@ -71,6 +71,9 @@ public:
 	void SetRoundsWon();
 	
 	*/
+	vector<Tile> GetBoneYard();
+
+	unsigned short GetRoundsWon();
 
 
 private:
@@ -83,7 +86,6 @@ private:
 	bool m_myTurn;
 	unsigned short m_roundsWon;
 	vector<Tile> m_boneYard;
-	vector<Tile> m_currentHand;
 
 };
 

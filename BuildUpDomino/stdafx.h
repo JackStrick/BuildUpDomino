@@ -6,6 +6,7 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
 // TODO: reference additional headers your program requires here
@@ -14,6 +15,7 @@
 #include "MessageOutput.h"
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include <algorithm>
 #include <iomanip>
 #include <stdlib.h>

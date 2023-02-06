@@ -35,6 +35,22 @@ void const MessageOutput::LoadGame()
 	cout << "\n\nLoading Game From File......\n";
 }
 
+bool const MessageOutput::EndGame()
+{
+	int quit;
+	cout << "\n\nWould you like to save and quit?\nPress 1 to continue or 0 to quit\n";
+	cin >> quit;
+
+	if (quit == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void const MessageOutput::FirstUp(int a_first, int a_humanTotal, int a_computerTotal)
 {
 	cout << "\nYour tile value was " << a_humanTotal;
@@ -134,7 +150,7 @@ void const MessageOutput::Finished(unsigned short a_cpuRounds, unsigned short a_
 	}
 	else if (a_cpuRounds == a_humanRounds)
 	{
-		cout << "\nThe torunament has ended in a tie";
+		cout << "\nThe tournament has ended in a tie";
 	}
 
 	cout << "\n\nThank you for playing!\n" << endl;

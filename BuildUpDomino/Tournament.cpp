@@ -35,8 +35,6 @@ void Tournament::StartGame(int a_choice)
     ///Initialize For New Game
     if (a_choice == 1)
     {
-        m_numRoundsCpu = 0;
-        m_numRoundsHuman = 0;
         m_numRounds = 0;
     }
 
@@ -87,12 +85,10 @@ void Tournament::ScoreGame()
     m_msg.DisplayScore(human, cpu);
     if (human > cpu)
     {
-        m_numRoundsHuman++;
         cout << "\n\nPlayer wins round";
     }
     else if (cpu > human)
     {
-        m_numRoundsCpu++;
         cout << "\n\nComputer wins round";
     }
     else if (cpu == human)
@@ -103,5 +99,5 @@ void Tournament::ScoreGame()
 
 void Tournament::EndGame()
 {
-    m_msg.Finished(m_numRoundsCpu,m_numRoundsHuman);
+    m_msg.Finished(m_round.GetRoundsComputerWon(), m_round.GetRoundsHumanWon());
 }
