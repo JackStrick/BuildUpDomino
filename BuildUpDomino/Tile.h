@@ -10,17 +10,11 @@ public:
 	// Destructor
 	~Tile();
 
-	// Copy Constructure
-
-
-
-
 	// Selectors
 	const char getColor();
 	const int getLeftPips();
 	const int getRightPips();
 	const int getTotalPips();
-
 
 private:
 	// Data Members

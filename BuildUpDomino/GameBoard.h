@@ -5,25 +5,25 @@
 class GameBoard
 {
 public:
+
+	// Default Contstructor
 	GameBoard();
+
+	// Destructor
 	~GameBoard();
 
-
-	void SetGameBoard(vector<Tile> tiles);
-
-	void TilePlacement(Tile a_tile, int a_pos);
-
+	// Selectors
+	vector<Tile> const GetDominoStack();
 	void const DisplayGameBoard();
 
+	// Mutators
+	void SetGameBoard(vector<Tile> tiles);
+	void TilePlacement(Tile a_tile, int a_pos);
 	void ClearBoard();
 
-	vector<Tile> const GetDominoStack();
-
-
 private:
-	//Tile m_dominoStack[12];
+	// Data Members
+	// Stack to store entire gameboard
 	vector<Tile> m_Stack;
-	static unsigned short count;
-
 };
 

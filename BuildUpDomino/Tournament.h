@@ -10,18 +10,18 @@
 class Tournament
 {
 public:
-	// Constructor 
+	// Default Constructor 
 	Tournament();
 
-	// Destructor
+	// Default Destructor
 	~Tournament();
 
-	//void StartFromFile();
+	// Utility Functions 
 
-	//Start Game - Begins the program by initializing setup
+	// Start Game - Begins the program by initializing setup
 	void StartGame(int a_choice);
 
-	//Continue Playing - Determines # of rounds based on user
+	// Continue Playing - Determines # of rounds based on user
 	bool ContinuePlaying();
 
 	// Get Current Score of Game
@@ -31,12 +31,11 @@ public:
 	void EndGame();
 
 private:
-	//FileReader m_file;
+	// Private Objects
 	MessageOutput m_msg;
 	Round m_round;
-	ifstream m_sfile;
 
-	// Variables
+	// Data Members
 	unsigned short m_numRounds;
 
 
