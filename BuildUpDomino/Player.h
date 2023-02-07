@@ -15,7 +15,7 @@ public:
 	~Player();
 
 
-	virtual void Choice() = 0;
+	virtual vector<int> Choice(vector<Tile> a_gameBoardStack) = 0;
 
 	bool Play(Tile a_boardTile, Tile a_handtile);
 
@@ -49,6 +49,8 @@ public:
 
 	bool IsValidPlacement(Tile a_boardTile, Tile a_handtile);
 
+	bool IsValidPlaceableTile(vector<Tile>& a_playerTiles, vector<Tile>& a_gameBoardTiles);
+
 	vector<vector<int>> Strategy(vector<Tile> a_gameboard);
 
 	// Selectors
@@ -68,12 +70,6 @@ public:
 
 	void SetRoundsWon(unsigned short a_rounds);
 
-	/*
-	void SetHand();
-	void SetPointsFromFile();
-	void SetRoundsWon();
-	
-	*/
 	vector<Tile> GetBoneYard();
 
 	unsigned short GetRoundsWon();

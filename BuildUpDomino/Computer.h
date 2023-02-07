@@ -7,7 +7,7 @@ public:
 	Computer();
 	~Computer();
 
-	void Choice();
+	vector<int> Choice(vector<Tile> a_gameBoardStack);
 
 private:
 	char m_tileColor = 'W';

@@ -54,64 +54,24 @@ void Round::StartRound(int a_choice)
 
 		while (IsPlaceableTiles(m_computer.GetHand()) || IsPlaceableTiles(m_human.GetHand()))
 		{
+
+			//HUMAN TURN
 			if (m_human.IsMyTurn())
 			{
-				int tile, location;
-				bool play;
+				m_gameBoard.DisplayGameBoard();
+				vector<int> tile_loc = m_human.Choice(m_gameBoard.GetDominoStack());
 
-				//Do-While Loop That Takes In Users' Tile Placement and Validates It Or Provides Help
-				do
-				{
-					cout << "\n\nYour Hand\n";
-					m_human.ShowHand();
-					m_gameBoard.DisplayGameBoard();
-					cout << "\n\nEnter 99 For Help or 89 to Pass your turn";
-					tile = m_msg.TileSelection();
-					if (tile != 99 && tile != 89)
-					{
-						location = m_msg.PlacementLocation();
-					}
-					if (tile == 99)
-					{
-						cout << "\nYou need help";
-						vector<vector<int>> possibleMoves;
-						possibleMoves = m_human.Strategy(m_gameBoard.GetDominoStack());
-						//m_msg.ShowPossibleMoves(possibleMoves);
-						tile = m_msg.TileSelection();
-						location = m_msg.PlacementLocation();
-					}
-					if (tile == 89)
-					{
-						if (!IsPlaceableTiles(m_human.GetHand()))
-						{
-							cout << "\nNo Playable Tiles So Player Can Pass";
-							break;
-						}
-						else
-						{
-							cout << "\nYou have at least 1 playable tile. You may not pass your turn.";
-							tile = m_msg.TileSelection();
-							location = m_msg.PlacementLocation();
-						}
-					}
-					if (!m_human.Play(m_gameBoard.GetDominoStack().at(location), m_human.GetHand().at(tile)))
-					{
-						play = false;
-						cout << "\nThis Tile Cannot Be Placed Here\n";
-					}
-					else
-					{
-						play = true;
-					}
-				} while (!play);
 				
-				if (tile != 89)
+				// If Selection vector tile_loc is not empty, the tiles can be placed
+				if (tile_loc.size() > 1 && tile_loc.at(0) != 89)
 				{
 					cout << "You are ";
-					m_gameBoard.TilePlacement(m_human.GetHand().at(tile), location);
-					m_human.RemoveTileFromHand(tile);
+					m_gameBoard.TilePlacement(m_human.GetHand().at(tile_loc[0]), tile_loc[1]);
+					m_human.RemoveTileFromHand(tile_loc[0]);
 				}
 
+				// Switch turns before saving for no repeat turn
+				SwitchTurn();
 				//Prompt User to Save and Quit Game
 				bool quit = m_msg.EndGame();
 				if (quit)
@@ -119,35 +79,17 @@ void Round::StartRound(int a_choice)
 					SaveGame();
 				}
 
-				else
-				{
-					SwitchTurn();
-				}
 			}
+			//COMPUTER TURN
 			else if (m_computer.IsMyTurn())
 			{
-				int tile, location;
-				cout << "\n\nComputer's Hand\n";
-				m_computer.ShowHand();
-				vector<vector<int>> possibleMoves(2);
-				possibleMoves = m_computer.Strategy(m_gameBoard.GetDominoStack());
-				if (possibleMoves[0].size() > 0)
+				vector<int> tile_loc = m_computer.Choice(m_gameBoard.GetDominoStack());
+				if (tile_loc.size() > 1)
 				{
-					do
-					{
-						int selection = rand() % possibleMoves.at(1).size();
-						location = possibleMoves[0].at(selection);
-						tile = possibleMoves[1].at(selection);
-
-					} while (!m_computer.Play(m_gameBoard.GetDominoStack().at(location), m_computer.GetHand().at(tile)));
-					cout << "\nThe computer is ";
-					m_gameBoard.TilePlacement(m_computer.GetHand().at(tile), location);
-					m_computer.RemoveTileFromHand(tile);
+					m_gameBoard.TilePlacement(m_computer.GetHand().at(tile_loc[0]), tile_loc[1]);
+					m_computer.RemoveTileFromHand(tile_loc[0]);
 				}
-				else
-				{
-					cout << "\nComputer Can't Place a Tile";
-				}
+				
 				SwitchTurn();
 			}
 		}
@@ -342,8 +284,7 @@ void Round::StartFromFile()
 			break;
 		
 	}
-	
-	
+
 	//Comp Gameboard after human gameboard
 	m_gameBoard.SetGameBoard(humanStacks);
 	m_gameBoard.SetGameBoard(compStacks);
@@ -497,18 +438,15 @@ void Round::ResetPoints()
 void Round::SaveGame()
 {
 	vector<Tile> temp;
-
-	time_t now = time(0);
-	// convert now to string form
-	string date = ctime(&now);
-	replace(date.begin(), date.end(), ' ', '_');
-	date.erase(date.end() - 1);
-
+	string path = "C:\\Users\\jstrickland\\Documents\\CMPS366\\";
+	cout << "\n\nEnter file name to save - Do not include extension" << endl;
 	//Create File Name With Data and txt File Extension
-	string fileName = "BuildUpSave.txt";
+	string fileName;
+	cin >> fileName;
 	
+	cout << "\n\nSaving Game to: " + path + fileName + ".txt";
 	//Create New File
-	ofstream file("C:\\Users\\jstrickland\\Documents\\CMPS366\\" + fileName);
+	ofstream file(path + fileName + ".txt");
 
 	if (file.is_open())
 	{

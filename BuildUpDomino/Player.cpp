@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-	//m_points = 0;
+
 }
 
 Player::~Player()
@@ -219,6 +219,39 @@ bool Player::IsValidPlacement(Tile a_boardTile, Tile a_handtile)
 	return false;
 }
 
+bool Player::IsValidPlaceableTile(vector<Tile>& a_playerTiles, vector<Tile>& a_gameBoardTiles)
+{
+
+	//Check first players tiles
+	for (int i = 0; i < a_gameBoardTiles.size(); i++)
+	{
+		for (int i = 0; i < a_playerTiles.size(); i++)
+		{
+			//Tile total pips larger than on board
+			if (a_playerTiles.at(i).getTotalPips() >= a_gameBoardTiles.at(i).getTotalPips())
+			{
+				return true;
+			}
+			//If a double tile, it can be placed anywhere unless the stack is a double tile greater to the one in hand
+			else if (a_playerTiles.at(i).getLeftPips() == a_playerTiles.at(i).getRightPips())
+			{
+				if (a_gameBoardTiles.at(i).getLeftPips() != a_gameBoardTiles.at(i).getRightPips())
+				{
+					return true;
+				}
+				else if ((a_gameBoardTiles.at(i).getLeftPips() == a_gameBoardTiles.at(i).getRightPips()) && (a_playerTiles.at(i).getTotalPips() > a_gameBoardTiles.at(i).getTotalPips()))
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+
+
 bool Player::Play(Tile a_boardTile, Tile a_handtile)
 {
 	return IsValidPlacement(a_boardTile, a_handtile);
@@ -233,19 +266,34 @@ bool Player::Play(Tile a_boardTile, Tile a_handtile)
 vector<vector<int>> Player::Strategy(vector<Tile> a_gameboard)
 {
 	vector<vector<int>> possibleMoves(2);
-	
-	for (int i = 0; i < a_gameboard.size(); i++)
+	vector<int> bestMove;
+
+
+	vector<Tile> tempTile;// = GetHand();
+	vector<Tile> tempBoard = a_gameboard;
+
+
+
+
+	for (int location = 0; location < a_gameboard.size(); location++)
 	{
-		for (int j = 0; j < GetHand().size(); j++)
+		for (int tile = 0; tile < GetHand().size(); tile++)
 		{
-			if (IsValidPlacement(a_gameboard.at(i), GetHand().at(j)))
+			if (IsValidPlacement(a_gameboard.at(location), GetHand().at(tile)))
 			{
-				possibleMoves[0].push_back(i);
-				possibleMoves[1].push_back(j);
+				//bestMove.clear();
+				//bestMove.push_back(location);
+				//bestMove.push_back(tile);
+				possibleMoves[0].push_back(location);
+				possibleMoves[1].push_back(tile);
 			}
+
 		}
 	}
 	
+	//cout << "\nThe best move to play: Tile {" << GetHand().at(bestMove.at(1)).getColor() << GetHand().at(bestMove.at(1)).getLeftPips() << GetHand().at(bestMove.at(1)).getRightPips() << "} ";
+	//cout << "on Stack " << bestMove.at(0) << " \nSince that is the lowest tile and highest stack tile";
+	//return bestMove;
 	return possibleMoves;
 }
 
