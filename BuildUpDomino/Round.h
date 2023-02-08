@@ -14,29 +14,34 @@
 class Round
 {
 public:
+	// Default Constructor
 	Round();
+	// Default Destructor
 	~Round();
 
-	void StartRound(int a_choice);
-	void StartNew();
-	void StartFromFile();
-	int TileCompare(Tile a_human, Tile a_computer);
-	void SetPlayerTurn(Player &a_player);
-	bool IsPlaceableTiles(vector<Tile> &a_playerHand);
-	void SwitchTurn();
-	void UpdatePoints();
-	void ResetPoints();
+	// Selectors
 	unsigned short const GetHumanPoints();
 	unsigned short const GetComputerPoints();
 	unsigned short const GetRoundsHumanWon();
 	unsigned short const GetRoundsComputerWon();
+
+	// Mutator
+	void SetPlayerTurn(Player &a_player);
+	void SwitchTurn();
+	void UpdatePoints();
+	void ResetPoints();
 	void RoundWin();
 
+	// Utility Functions
+	void StartRound(int a_choice);
+	void StartNew();
+	void StartFromFile();
+	int TileCompare(Tile a_human, Tile a_computer);
+	bool IsPlaceableTiles(vector<Tile>& a_playerHand);
 	void SaveGame();
 
-
 private:
-	// Class Objects
+	//Private Class Objects
 	Human m_human;
 	Computer m_computer;
 	Deck m_deck;
@@ -45,6 +50,7 @@ private:
 	MessageOutput m_msg;
 	fstream m_sfile;
 
+	//Data Members
 	unsigned short m_handCount;
 	unsigned short m_roundCount;
 	unsigned short m_humanType = 1;

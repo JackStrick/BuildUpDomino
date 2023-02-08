@@ -2,27 +2,24 @@
 class MessageOutput
 {
 public:
+	// Default Constructor
 	MessageOutput() {};
+	// Default Destructor
 	~MessageOutput() {};
 
-	//Welcome - Initial User Greeting
-	int Welcome();
-
-	void const GameSetup();
-	void const LoadGame();
+	// Selectors
+	int const Welcome();
+	bool const Continue();
+	int const TileSelection();
+	int const PlacementLocation();
 	bool const EndGame();
 
+	// Utility Functions
+	void const GameSetup();
+	void const LoadGame();
 	void const FirstUp(int a_first, int a_humanTotal, int a_computerTotal);
-	//Continue - Asks the user if they want to keep playing the tournament
-	bool Continue();
-
 	void const DisplayScore(unsigned short a_playerScore, unsigned short a_cpuScore);
+	void const RoundsScore(unsigned short a_cpuRounds, unsigned short a_humanRounds);
 	void const Finished(unsigned short a_cpuRounds, unsigned short a_humanRounds);
-	int const PlacementLocation();
-	int const TileSelection();
-	//void ShowPossibleMoves(vector<vector<int>> a_moves);
-
-
 
 };
-
