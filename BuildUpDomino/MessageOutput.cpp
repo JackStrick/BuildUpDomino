@@ -105,7 +105,7 @@ int const MessageOutput::PlacementLocation()
 		cout << "\nWhere would you like to place a tile?\n";
 		cin >> location;
 		location[0] = toupper(location[0]);
-	} while ((location[0] != 'B' && location[0] != 'W') && (int(location[1]) > 6 || (int(location[1]) < 1)));
+	} while ((location[0] != 'B' && location[0] != 'W') || (int(location[1]) > 54 || (int(location[1]) < 49)));
 
 
 
