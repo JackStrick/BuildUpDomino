@@ -342,7 +342,7 @@ void Round::StartRound(int a_choice)
 		m_msg.DisplayScore(m_human.GetPoints(), m_computer.GetPoints());
 		m_handCount++;	
 	}
-
+	m_gameBoard.DisplayGameBoard();
 	m_gameBoard.ClearBoard();
 	RoundWin();
 }
@@ -477,6 +477,7 @@ void Round::StartFromFile()
 			if (line == "Score:")
 			{
 				m_sfile >> score;
+				// Reset the score to zero since SetPoints uses += operator
 				m_computer.PointReset();
 				m_computer.SetPoints(score);
 			}

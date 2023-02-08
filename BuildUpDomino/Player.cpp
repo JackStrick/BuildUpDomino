@@ -623,18 +623,26 @@ vector<vector<int>> Player::Strategy(vector<Tile> a_gameboard)
 			}
 			// Based on the gameboard position of the vector
 			// Determine the stack name
-			string stack;
-			if (possibleMoves[0].at(0) < 6)
-			{
-				stack = "B" + (possibleMoves[0].at(0) + 1);
-			}
-			else if (possibleMoves[0].at(0) > 5)
-			{
-				stack = "W" + (possibleMoves[0].at(0) - 5);
-			}
 
-			cout << "\nThe best move is to play Tile {" << GetHand().at(possibleMoves[1].at(0)).getColor() << GetHand().at(possibleMoves[1].at(0)).getLeftPips() << GetHand().at(possibleMoves[1].at(0)).getRightPips() << "} ";
-			cout << "on stack " << stack << " \nSince that is the lowest tile and highest stack tile";
+			if (!possibleMoves[0].empty()) 
+			{
+				string stack;
+				if (possibleMoves[0].at(0) < 6)
+				{
+					stack = "B" + (possibleMoves[0].at(0) + 1);
+				}
+				else if (possibleMoves[0].at(0) > 5)
+				{
+					stack = "W" + (possibleMoves[0].at(0) - 5);
+				}
+
+				cout << "\nThe best move is to play Tile {" << GetHand().at(possibleMoves[1].at(0)).getColor() << GetHand().at(possibleMoves[1].at(0)).getLeftPips() << GetHand().at(possibleMoves[1].at(0)).getRightPips() << "} ";
+				cout << "on stack " << stack << " \nSince that is the lowest tile and highest stack tile";
+			}
+			else
+			{
+				cout << "\nThere is no possible move you can make. You need to skip your turn. Enter 89 to skip";
+			}
 		}
 		else {
 			string stack;

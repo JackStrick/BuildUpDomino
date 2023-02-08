@@ -95,7 +95,6 @@ void Tournament::ScoreGame()
 {
     int human = m_round.GetHumanPoints();
     int cpu = m_round.GetComputerPoints();
-    m_msg.DisplayScore(human, cpu);
     if (human > cpu)
     {
         cout << "\n\nPlayer wins round";
