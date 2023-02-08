@@ -1,5 +1,10 @@
+/************************************************************
+* Name:  Jack Strickland
+* Project : 1 - Build Up C++
+* Class : CMPS366 Organization of Programming Languages
+* Date : 2/8/2023
+************************************************************/
 // BuildUp.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #include "stdafx.h"
 #include "Tournament.h"
 #include "MessageOutput.h"
