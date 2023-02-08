@@ -339,6 +339,7 @@ void Round::StartRound(int a_choice)
 
 		cout << "\nHand Complete!\nUpdating Scoreboard....";
 		UpdatePoints();
+		m_msg.DisplayScore(m_human.GetPoints(), m_computer.GetPoints());
 		m_handCount++;	
 	}
 
@@ -397,10 +398,12 @@ void Round::StartFromFile()
 {
 	do
 	{
+		string fileName;
 		// filepath hold the path of the game file entered by the user
-		string filePath;
-		cout << "\nPlease enter the file path: ";
-		cin >> filePath;
+		string filePath = "C:\\Users\\jstrickland\\Documents\\CMPS366\\";
+		cout << "\nPlease enter the file name: ";
+		cin >> fileName;
+		filePath += fileName;
 
 		// Using fstream object, attempt to open file from given path
 		m_sfile.open(filePath);

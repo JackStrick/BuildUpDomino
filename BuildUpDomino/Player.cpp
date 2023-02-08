@@ -570,6 +570,18 @@ vector<vector<int>> Player::Strategy(vector<Tile> a_gameboard)
 						}
 						// If there is a better position, lower tile from hand and higher tile on stack,
 						// Remove possible move and add the new one
+						// First check if the tile is a double tile, and get the highest possible tile it could be placed on
+						else if (GetHand().at(tile).getLeftPips() == GetHand().at(tile).getRightPips() && a_gameboard.at(location).getTotalPips() >= a_gameboard.at(possibleMoves[0].at(0)).getTotalPips())
+						{
+							if (a_gameboard.at(location).getLeftPips() != a_gameboard.at(location).getRightPips() || GetHand().at(tile).getTotalPips() >= a_gameboard.at(location).getTotalPips())
+							{
+								possibleMoves[0].clear();
+								possibleMoves[1].clear();
+								possibleMoves[0].push_back(location);
+								possibleMoves[1].push_back(tile);
+							}
+						}
+						// Then get the next best with a non double tile
 						else if (a_gameboard.at(location).getTotalPips() >= a_gameboard.at(possibleMoves[0].at(0)).getTotalPips() && GetHand().at(tile).getTotalPips() < GetHand().at(possibleMoves[1].at(0)).getTotalPips())
 						{
 							possibleMoves[0].clear();
@@ -577,6 +589,7 @@ vector<vector<int>> Player::Strategy(vector<Tile> a_gameboard)
 							possibleMoves[0].push_back(location);
 							possibleMoves[1].push_back(tile);
 						}
+
 					}
 				}
 
@@ -659,8 +672,21 @@ vector<vector<int>> Player::Strategy(vector<Tile> a_gameboard)
 						}
 						// If there is a better position, lower tile from hand and higher tile on stack,
 						// Remove possible move and add the new one
+						// First check if the tile is a double tile, and get the highest possible tile it could be placed on
+						else if (GetHand().at(tile).getLeftPips() == GetHand().at(tile).getRightPips() && a_gameboard.at(location).getTotalPips() >= a_gameboard.at(possibleMoves[0].at(0)).getTotalPips())
+						{
+							if (a_gameboard.at(location).getLeftPips() != a_gameboard.at(location).getRightPips() || GetHand().at(tile).getTotalPips() >= a_gameboard.at(location).getTotalPips())
+							{
+								possibleMoves[0].clear();
+								possibleMoves[1].clear();
+								possibleMoves[0].push_back(location);
+								possibleMoves[1].push_back(tile);
+							}
+						}
+						// Then get the next best with a non double tile
 						else if (a_gameboard.at(location).getTotalPips() >= a_gameboard.at(possibleMoves[0].at(0)).getTotalPips() && GetHand().at(tile).getTotalPips() < GetHand().at(possibleMoves[1].at(0)).getTotalPips())
 						{
+
 							possibleMoves[0].clear();
 							possibleMoves[1].clear();
 							possibleMoves[0].push_back(location);

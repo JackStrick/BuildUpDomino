@@ -48,7 +48,7 @@ Assistance Received: None
 ********************************************************************* */
 bool const MessageOutput::Continue()
 {
-	cout << "\nThe round has concluded\nWould you like to play a new round?\n\n";
+	cout << "\nWould you like to play a new round?\n\n";
 
 	int choice = 0;
 	while ((choice != 1) && (choice != 2))
@@ -225,6 +225,27 @@ void const MessageOutput::DisplayScore(unsigned short a_playerScore, unsigned sh
 	cout << "\n------------------------------------------------";
 	cout << "\nHuman\t\t\tComputer\n";
 	cout << a_playerScore << "\t\t\t" << a_cpuScore;
+}
+
+/* *********************************************************************
+Function Name: Finished
+Purpose:	Displays the total rounds won by both players
+Parameters:
+
+			a_cpuRounds, the total rounds the computer won
+			a_humanRounds, the total rounds the human won
+
+Return Value: None
+Algorithm: None
+Assistance Received: None
+********************************************************************* */
+void const MessageOutput::RoundsScore(unsigned short a_cpuRounds, unsigned short a_humanRounds)
+{
+	cout << "\n\nThe round has concluded";
+	cout << "\n\n\t\tSCOREBOARD";
+	cout << "\n------------------------------------------------";
+	cout << "\nHuman\t\t\tComputer\n";
+	cout << "Rounds: " << a_humanRounds << "\t\t" << "Rounds: " << a_cpuRounds << endl;
 }
 
 /* *********************************************************************

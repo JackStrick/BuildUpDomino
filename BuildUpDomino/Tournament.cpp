@@ -52,6 +52,8 @@ void Tournament::StartGame(int a_choice)
         ScoreGame();
         m_round.ResetPoints();
         m_numRounds++;
+        a_choice = 1;
+        m_msg.RoundsScore(m_round.GetRoundsComputerWon(), m_round.GetRoundsHumanWon());
     } while (ContinuePlaying());
 
     EndGame();

@@ -40,10 +40,17 @@ Assistance Received: none
 ********************************************************************* */
 vector<int> Computer::Choice(vector<Tile> a_gameBoardStack)
 {
+	// Will hold the tile position from hand in [0]
+	// Will hold the tile position on the gameboard in [1]
 	vector<int> tile_loc;
+
 	cout << "\n\nComputer's Hand\n";
 	ShowHand();
+
+	// possibleMoves will hold the gameboard position and hand position
 	vector<vector<int>> possibleMoves = Strategy(a_gameBoardStack);
+
+	// Check that possibleMoves has a move, return that move
 	if (possibleMoves[0].size() > 0)
 	{
 		cout << "\nThe computer is ";
